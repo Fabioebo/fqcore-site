@@ -1,91 +1,167 @@
-     <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FQCORE</title>
-
-    <style>
-        *{
-            margin:0;
-            padding:0;
-            box-sizing:border-box;
-        }
-
-        body{
-            font-family: Arial, Helvetica, sans-serif;
-            background:#ffffff;
-            min-height:100vh;
-            display:flex;
-            justify-content:center;
-            align-items:center;
-            text-align:center;
-            color:#1f2937;
-        }
-
-        .container{
-            max-width:900px;
-            padding:40px;
-        }
-
-        .logo{
-            width:100%;
-            max-width:700px;
-            margin-bottom:40px;
-        }
-
-        h2{
-            font-size:2rem;
-            margin-bottom:15px;
-        }
-
-        p{
-            font-size:1.1rem;
-            color:#4b5563;
-            line-height:1.7;
-        }
-
-        .status{
-            margin-top:30px;
-            display:inline-block;
-            padding:12px 24px;
-            border-radius:8px;
-            background:#2563eb;
-            color:white;
-            font-weight:bold;
-        }
-
-        .footer{
-            margin-top:50px;
-            color:#6b7280;
-            font-size:0.9rem;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FQCORE — Tecnologia em Qualidade</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
 </head>
-
 <body>
 
-    <div class="container">
-
-        <img src="logo-fqcore.png" alt="FQCORE" class="logo">
-
-        <h2>Tecnologia para Laboratórios e Processos Industriais</h2>
-
-        <p>
-            Em breve novidades!
-        </p>
-
-        <div class="status">
-            Site em desenvolvimento
-        </div>
-
-        <div class="footer">
-            © 2026 FQCORE
-        </div>
-
+  <!-- ── NAVBAR ─────────────────────────────────────────────────── -->
+  <nav id="navbar">
+    <div class="nav-container">
+      <a href="#inicio" class="logo">
+        </span>FQ<span class="logo-q">CORE
+      </a>
+      <span class="nav-badge">Em breve</span>
     </div>
+  </nav>
 
+  <!-- ── HERO ───────────────────────────────────────────────────── -->
+  <section id="inicio" class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content fade-up">
+      <span class="hero-tag">Tecnologia em Qualidade</span>
+      <h1>Estamos construindo<br><span class="gradient-text">o futuro da qualidade</span></h1>
+      <p class="hero-sub">A FQCORE está desenvolvendo soluções integradas de software, hardware e serviços para laboratórios, indústrias e prestadores de serviço que precisam de precisão, rastreabilidade e conformidade.</p>
+      <div class="hero-cta">
+        <a href="#sobre" class="btn-primary">Conheça a FQCORE</a>
+        <a href="#areas" class="btn-ghost">Ver o que vem por aí</a>
+      </div>
+    </div>
+    <div class="hero-visual fade-up-delay">
+      <div class="hero-card">
+        <div class="card-dot green"></div>
+        <span>FQCORE — Em desenvolvimento</span>
+        <div class="card-metrics">
+          <div class="metric"><strong>ISO</strong><small>9001</small></div>
+          <div class="metric"><strong>ISO</strong><small>17025</small></div>
+          <div class="metric"><strong>ISO</strong><small>14001</small></div>
+          <div class="metric"><strong>ISO</strong><small>45001</small></div>
+        </div>
+      </div>
+    </div>
+    <div class="scroll-hint">
+      <span></span>
+    </div>
+  </section>
+
+  <!-- ── QUEM SOMOS ─────────────────────────────────────────────── -->
+  <section id="sobre" class="section sobre-section">
+    <div class="container sobre-grid">
+      <div class="sobre-content reveal">
+        <span class="section-tag">Quem somos</span>
+        <h2>Nascemos do chão de laboratório</h2>
+        <p>A FQCORE surge da experiência prática de quem viveu a rotina da gestão da qualidade e da metrologia. Sabemos o que falta, o que incomoda e o que poderia ser muito mais simples.</p>
+        <p>Nossa missão é desenvolver tecnologia que realmente resolve — software robusto, hardware confiável e serviços especializados trabalhando de forma integrada para que sua operação funcione com eficiência e total conformidade.</p>
+        <div class="sobre-badges">
+          <span class="badge">ISO 9001</span>
+          <span class="badge">ISO 17025</span>
+          <span class="badge">ISO 14001</span>
+          <span class="badge">ISO 45001</span>
+        </div>
+      </div>
+      <div class="sobre-cards reveal">
+        <div class="sobre-card">
+          <div class="sobre-icon"></div>
+          <h4>Missão</h4>
+          <p>Simplificar a conformidade técnica com tecnologia acessível, integrada e confiável.</p>
+        </div>
+        <div class="sobre-card">
+          <div class="sobre-icon"></div>
+          <h4>Visão</h4>
+          <p>Ser referência nacional em soluções integradas de qualidade e metrologia.</p>
+        </div>
+        <div class="sobre-card">
+          <div class="sobre-icon"></div>
+          <h4>Valores</h4>
+          <p>Precisão, rastreabilidade, inovação contínua e compromisso com quem depende de conformidade.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── O QUE ESTAMOS CONSTRUINDO ──────────────────────────────── -->
+  <section id="areas" class="section areas-section">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-tag">O que vem por aí</span>
+        <h2>Três frentes, uma visão integrada</h2>
+        <p>Estamos trabalhando em soluções que cobrem toda a cadeia da qualidade — do dado ao certificado, do sensor ao relatório.</p>
+      </div>
+
+      <div class="areas-grid">
+        <div class="area-card reveal" data-delay="0">
+          <div class="area-icon software">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+          </div>
+          <div class="area-tag">Software</div>
+          <h3>Sistema de Gestão Integrada</h3>
+          <p>Uma plataforma completa para gestão da qualidade. Certificados, ordens de serviço, calibrações, auditorias e muito mais — em um único sistema projetado para laboratórios e indústrias.</p>
+          <div class="area-status">
+            <span class="status-dot"></span>
+            Em desenvolvimento ativo
+          </div>
+        </div>
+
+        <div class="area-card reveal" data-delay="100">
+          <div class="area-icon hardware">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2a10 10 0 1 0 10 10"/><path d="M12 6v6l4 2"/><circle cx="18" cy="6" r="3"/></svg>
+          </div>
+          <div class="area-tag">Hardware</div>
+          <h3>Instrumentação Metrológica</h3>
+          <p>Equipamentos de medição, monitoramento e calibração desenvolvidos para aplicações críticas. Rastreabilidade garantida, conectividade integrada ao sistema de gestão.</p>
+          <div class="area-status">
+            <span class="status-dot yellow"></span>
+            Em planejamento
+          </div>
+        </div>
+
+        <div class="area-card reveal" data-delay="200">
+          <div class="area-icon servicos">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <div class="area-tag">Serviços</div>
+          <h3>Consultoria & Capacitação</h3>
+          <p>Implantação de sistemas de qualidade, auditorias técnicas e treinamentos especializados. Expertise de quem conhece a norma e a prática do laboratório.</p>
+          <div class="area-status">
+            <span class="status-dot yellow"></span>
+            Em breve
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── EM BREVE ────────────────────────────────────────────────── -->
+  <section class="section breve-section">
+    <div class="container">
+      <div class="breve-box reveal">
+        <span class="section-tag">Novidades a caminho</span>
+        <h2>Estamos quase lá</h2>
+        <p>Grandes atualizações chegando em breve. Acompanhe o progresso da FQCORE e seja um dos primeiros a conhecer nossas soluções quando lançarmos.</p>
+        <div class="breve-pills">
+          <span class="pill">Lançamento do Software</span>
+          <span class="pill">Sistemas de Monitoramento</span>
+          <span class="pill">Integração IoT</span>
+          <span class="pill">Auditorias e Consultorias</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ──────────────────────────────────────────────────── -->
+  <footer>
+    <div class="container footer-simple">
+      <a href="#inicio" class="logo"><span class="logo-q">FQ</span>CORE</a>
+      <span>© 2026 FQCORE Ltda. Todos os direitos reservados.</span>
+      <span class="footer-tagline">Tecnologia emhttps://fonts.googleapis.com Qualidade</span>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
 </body>
-
 </html>
