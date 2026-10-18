@@ -1,167 +1,244 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>FQCORE — Tecnologia em Qualidade</title>
-  <link rel="stylesheet" href="style.css" />
-  <link rel="preconnect" href="" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>FQCORE · Software para gestão da qualidade e da metrologia</title>
+<meta name="description" content="Sistemas para laboratórios ISO/IEC 17025, empresas ISO 9001 e controle de equipamentos e calibrações. Também fabricamos o ThermoLog, sensor de temperatura e umidade.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Condensed:wght@600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="site.css">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="theme-color" content="#13294B">
+<link rel="canonical" href="https://fqcore.com.br/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:site_name" content="FQCORE">
+<meta property="og:title" content="FQCORE · Software para gestão da qualidade e da metrologia">
+<meta property="og:description" content="Sistemas para laboratórios ISO/IEC 17025, empresas ISO 9001 e controle de equipamentos e calibrações. Também fabricamos o ThermoLog, sensor de temperatura e umidade.">
+<meta property="og:url" content="https://fqcore.com.br/">
+<meta property="og:image" content="https://fqcore.com.br/og-fqcore.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
 </head>
 <body>
 
-  <!-- ── NAVBAR ─────────────────────────────────────────────────── -->
-  <nav id="navbar">
-    <div class="nav-container">
-      <a href="#inicio" class="logo">
-        </span>FQ<span class="logo-q">CORE
+<header class="titlebar">
+  <div class="wrap">
+    <a href="index.html" class="marca" aria-label="FQCORE, página inicial"><img src="logo-fqcore-claro.png" alt="FQCORE" width="155" height="22"></a>
+    <nav class="topnav" aria-label="Principal">
+      <details class="dd"><summary>Produtos</summary><div class="dd-painel dd-produtos"><a href="produto-17025.html"><b>FQCORE 17025</b><span>Laboratórios de calibração e ensaio</span></a><a href="produto-9001.html"><b>FQCORE 9001</b><span>Sistema de gestão da qualidade</span></a><a href="produto-equipamentos.html"><b>FQCORE Equipamentos</b><span>Instrumentos e calibrações</span></a><a href="thermolog.html"><b>ThermoLog</b><span>Monitoramento ambiental</span></a></div></details>
+      <details class="dd"><summary>Recursos</summary><div class="dd-painel"><a href="duvidas.html"><b>Artigos</b><span>Metrologia, ISO/IEC 17025 e ISO 9001</span></a><a href="ferramentas.html"><b>Calculadoras</b><span>Temperatura, incerteza e conversões</span></a><a href="autoavaliacao.html"><b>Autoavaliação ISO/IEC 17025</b><span>34 perguntas por cláusula</span></a><a href="autoavaliacao-9001.html"><b>Autoavaliação ISO 9001</b><span>32 perguntas por cláusula</span></a></div></details>
+      <a href="index.html#sobre">Sobre</a>
+      <a href="index.html#contato">Contato</a>
+    </nav>
+    <div class="acoes">
+      <a href="https://app.fqcore.com.br/login" class="entrar">Entrar</a>
+      <a href="index.html#contato" class="btn btn-primary">Agendar conversa</a>
+    </div>
+    <details class="menu-mob"><summary aria-label="Abrir menu">Menu</summary>
+      <div class="mob-painel">
+        <span class="label">Produtos</span><a href="produto-17025.html">FQCORE 17025</a><a href="produto-9001.html">FQCORE 9001</a><a href="produto-equipamentos.html">FQCORE Equipamentos</a><a href="thermolog.html">ThermoLog</a>
+        <span class="label">Recursos</span><a href="duvidas.html">Artigos</a><a href="ferramentas.html">Calculadoras</a><a href="autoavaliacao.html">Autoavaliação ISO/IEC 17025</a><a href="autoavaliacao-9001.html">Autoavaliação ISO 9001</a>
+        <span class="label">Empresa</span><a href="index.html#sobre">Sobre</a><a href="index.html#contato">Contato</a><a href="https://app.fqcore.com.br/login">Entrar no sistema</a>
+      </div>
+    </details>
+  </div>
+</header>
+<script src="site.js" defer></script>
+
+<main id="inicio">
+
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-text">
+      <h1>Software para gestão da qualidade e da metrologia</h1>
+      <p class="lead">Temos sistemas para laboratórios de calibração e ensaio que trabalham com a ISO/IEC 17025, para empresas que trabalham com a ISO 9001 e para quem precisa controlar instrumentos e calibrações. Também fabricamos o ThermoLog, um sensor de temperatura e umidade.</p>
+      <div class="cta">
+        <a href="#produtos" class="btn btn-primary">Ver os produtos</a>
+        <a href="#contato" class="btn btn-ghost">Agendar uma conversa</a>
+      </div>
+      <div class="proof">
+        <span>Usuários ilimitados</span>
+        <span>Seus dados exportáveis a qualquer hora</span>
+      </div>
+    </div>
+
+    <div>
+      <div class="window" role="img" aria-label="Tela do sistema FQCORE mostrando alertas de vencimento de calibração">
+        <div class="win-title"><span>FQCORE · Empresa Exemplo</span><span class="who">Gerente da Qualidade</span></div>
+        <div class="win-body">
+          <div class="win-side" aria-hidden="true">
+            <span class="grp">Equipamentos</span>
+            <span class="on">Equipamentos / Padrões</span>
+            <span>Plano de Calibração</span>
+            <span>Certificados Recebidos</span>
+            <span>Condições Ambientais</span>
+            <span class="grp">Qualidade</span>
+            <span>Objetivos da Qualidade</span>
+            <span>Ações Corretivas</span>
+            <span>Auditorias</span>
+          </div>
+          <div class="win-main">
+            <div class="head"><strong>Vencimentos de calibração</strong><span class="label">próximos 30 dias</span></div>
+            <table class="win-table">
+              <thead><tr><th>Tag</th><th>Equipamento</th><th>Vence</th><th>Status</th></tr></thead>
+              <tbody>
+                <tr><td class="tag">PT-012</td><td>Termômetro padrão PT100</td><td class="dt">10/10/2026</td><td><span class="st st-bad">Vencido</span></td></tr>
+                <tr><td class="tag">MAN-021</td><td>Manômetro 0–10 bar</td><td class="dt">16/10/2026</td><td><span class="st st-warn">4 dias</span></td></tr>
+                <tr><td class="tag">PAQ-033</td><td>Paquímetro 150 mm</td><td class="dt">29/10/2026</td><td><span class="st st-warn">17 dias</span></td></tr>
+                <tr><td class="tag">MP-150</td><td>Jogo de massas 1 mg a 200 g</td><td class="dt">08/11/2026</td><td><span class="st st-ok">Em dia</span></td></tr>
+                <tr><td class="tag">MMD-07</td><td>Multímetro 6½ dígitos</td><td class="dt">11/11/2026</td><td><span class="st st-ok">Em dia</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="win-status"><span>1 vencido · 2 vencem em até 30 dias</span><span>ISO/IEC 17025 6.4 · ISO 9001 7.1.5</span></div>
+      </div>
+      <p class="caption">Tela do sistema com dados de exemplo.</p>
+    </div>
+  </div>
+</section>
+
+<section class="band alt" id="produtos">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>Nossos produtos</h2>
+      <p class="lead">Todos funcionam no mesmo sistema. Se você começar pelo controle de equipamentos e depois quiser a ISO 9001, os dados continuam onde estão.</p>
+    </div>
+    <div class="grid-4 prod-grid">
+      <a class="panel prod-card" href="produto-17025.html">
+        <div class="panel-body">
+          <h3>FQCORE 17025</h3>
+          <p>Para gerenciar laboratórios de calibração e ensaio, com base na ISO/IEC 17025.</p>
+          <ul class="ticks">
+            <li>OS, leituras e certificado no seu modelo</li>
+            <li>Incerteza pelo GUM e etiqueta Cgcre</li>
+            <li>Seções 6, 7 e 8 da norma cobertas</li>
+          </ul>
+          <span class="mais">Saiba mais sobre o FQCORE 17025</span>
+        </div>
       </a>
-      <span class="nav-badge">Em breve</span>
+      <a class="panel prod-card" href="produto-9001.html">
+        <div class="panel-body">
+          <h3>FQCORE 9001</h3>
+          <p>Para gerenciar o sistema da qualidade da empresa com base na ISO 9001, com ou sem certificação.</p>
+          <ul class="ticks">
+            <li>Contexto, riscos e objetivos da qualidade</li>
+            <li>Documentos, NC, auditorias e análise crítica</li>
+            <li>Indicadores prontos para a direção</li>
+          </ul>
+          <span class="mais">Saiba mais sobre o FQCORE 9001</span>
+        </div>
+      </a>
+      <a class="panel prod-card" href="produto-equipamentos.html">
+        <div class="panel-body">
+          <h3>FQCORE Equipamentos</h3>
+          <p>Para empresas que precisam controlar instrumentos e calibrações, com ou sem certificação.</p>
+          <ul class="ticks">
+            <li>Plano de calibração e alerta por e-mail</li>
+            <li>Análise do certificado recebido</li>
+            <li>Etiqueta, histórico e manutenção</li>
+          </ul>
+          <span class="mais">Saiba mais sobre o FQCORE Equipamentos</span>
+        </div>
+      </a>
+      <a class="panel prod-card" href="thermolog.html">
+        <div class="panel-body">
+          <h3>ThermoLog</h3>
+          <p>Registra temperatura, umidade e pressão e dispara um alarme quando algum valor sai do limite.</p>
+          <ul class="ticks">
+            <li>Funciona sozinho ou integrado ao FQCORE</li>
+            <li>Histórico guardado se a rede cair</li>
+            <li>Licença permanente, sem mensalidade</li>
+          </ul>
+          <span class="mais">Saiba mais sobre o ThermoLog</span>
+        </div>
+      </a>
     </div>
-  </nav>
+  </div>
+</section>
 
-  <!-- ── HERO ───────────────────────────────────────────────────── -->
-  <section id="inicio" class="hero">
-    <div class="hero-bg"></div>
-    <div class="hero-content fade-up">
-      <span class="hero-tag">Tecnologia em Qualidade</span>
-      <h1>Estamos construindo<br><span class="gradient-text">o futuro da qualidade</span></h1>
-      <p class="hero-sub">A FQCORE está desenvolvendo soluções integradas de software, hardware e serviços para laboratórios, indústrias e prestadores de serviço que precisam de precisão, rastreabilidade e conformidade.</p>
-      <div class="hero-cta">
-        <a href="#sobre" class="btn-primary">Conheça a FQCORE</a>
-        <a href="#areas" class="btn-ghost">Ver o que vem por aí</a>
+<section class="band">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>Qual produto atende a sua empresa</h2>
+    </div>
+    <div class="panel">
+      <div class="scroll-x">
+        <table class="cover casos">
+          <thead><tr><th>Você é</th><th>Precisa de</th><th>Indicado</th></tr></thead>
+          <tbody>
+            <tr><td>Laboratório</td><td>Gerenciar um laboratório de calibração ou ensaio, acreditado ou não</td><td><a href="produto-17025.html">FQCORE 17025</a>, com o ThermoLog nas salas controladas</td></tr>
+            <tr><td>Empresa</td><td>Organizar o sistema da qualidade com base na ISO 9001</td><td><a href="produto-9001.html">FQCORE 9001</a>, que já inclui o controle de equipamentos</td></tr>
+            <tr><td>Laboratório interno</td><td>Laboratório dentro de uma empresa que usa a ISO 9001</td><td><a href="produto-17025.html">17025</a> e <a href="produto-9001.html">9001</a> no mesmo sistema</td></tr>
+            <tr><td>Indústria</td><td>Controlar instrumentos, calibrações e manutenção</td><td><a href="produto-equipamentos.html">FQCORE Equipamentos</a></td></tr>
+            <tr><td>Qualquer empresa</td><td>Monitorar sala, câmara, estufa ou almoxarifado com limite de temperatura e umidade</td><td><a href="thermolog.html">ThermoLog</a></td></tr>
+          </tbody>
+        </table>
       </div>
     </div>
-    <div class="hero-visual fade-up-delay">
-      <div class="hero-card">
-        <div class="card-dot green"></div>
-        <span>FQCORE — Em desenvolvimento</span>
-        <div class="card-metrics">
-          <div class="metric"><strong>ISO</strong><small>9001</small></div>
-          <div class="metric"><strong>ISO</strong><small>17025</small></div>
-          <div class="metric"><strong>ISO</strong><small>14001</small></div>
-          <div class="metric"><strong>ISO</strong><small>45001</small></div>
-        </div>
+  </div>
+</section>
+
+<section class="band alt" id="servicos">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>Implantação</h2>
+      <p class="lead">A implantação está incluída. Nós importamos os dados que você já tem e treinamos a equipe.</p>
+    </div>
+    <div class="grid-4">
+      <div class="service"><h3>Migração</h3><p>Importamos equipamentos, registros e histórico do sistema anterior ou das suas planilhas.</p></div>
+      <div class="service"><h3>Documentos no seu modelo</h3><p>Certificados e relatórios com o layout, a logo e o selo da sua empresa.</p></div>
+      <div class="service"><h3>Treinamento</h3><p>Treinamento separado para técnicos, gestão da qualidade e equipe administrativa.</p></div>
+      <div class="service"><h3>Suporte direto</h3><p>O atendimento é feito pelos próprios sócios, que desenvolveram o sistema.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="sobre">
+  <div class="wrap">
+    <div class="about-text">
+      <h2>Quem somos</h2>
+      <p>A FQCORE desenvolve software para gestão da qualidade e da metrologia e fabrica equipamentos para monitoramento ambiental. Atendemos laboratórios de calibração e ensaio que trabalham com a ISO/IEC 17025 e empresas que trabalham com a ISO 9001.</p>
+      <p>Nossa equipe reúne mais de 14 anos de experiência dentro de laboratórios de calibração e ensaio. Por isso o sistema segue a rotina real de um laboratório e usa a terminologia das normas. O suporte é feito pela própria equipe que desenvolve o sistema, que conhece a parte técnica e o software.</p>
+      <p class="quote">Você pode exportar todos os seus dados a qualquer momento, sem precisar pedir.</p>
+    </div>
+  </div>
+</section>
+
+<section class="band alt" id="contato">
+  <div class="wrap contact">
+    <div style="display:grid;gap:14px">
+      <h2>Fale com a gente</h2>
+      <p>Marque uma conversa de 30 minutos. Você explica como trabalha hoje e nós mostramos como ficaria no FQCORE.</p>
+    </div>
+    <div class="panel">
+      <div class="panel-head"><span>Fale com a FQCORE</span></div>
+      <div class="panel-body">
+        <dl>
+          <div><dt class="label">E-mail</dt><dd><a href="mailto:fqcore@fqcore.com.br">fqcore@fqcore.com.br</a></dd></div>
+          <div><dt class="label">WhatsApp</dt><dd><a href="https://wa.me/5511979619908">(11) 97961-9908</a></dd></div>
+          <div><dt class="label">Já é cliente?</dt><dd><a href="https://app.fqcore.com.br/login">Entrar no sistema</a></dd></div>
+        </dl>
       </div>
     </div>
-    <div class="scroll-hint">
-      <span></span>
-    </div>
-  </section>
+  </div>
+</section>
 
-  <!-- ── QUEM SOMOS ─────────────────────────────────────────────── -->
-  <section id="sobre" class="section sobre-section">
-    <div class="container sobre-grid">
-      <div class="sobre-content reveal">
-        <span class="section-tag">Quem somos</span>
-        <h2>Nascemos do chão de laboratório</h2>
-        <p>A FQCORE surge da experiência prática de quem viveu a rotina da gestão da qualidade e da metrologia. Sabemos o que falta, o que incomoda e o que poderia ser muito mais simples.</p>
-        <p>Nossa missão é desenvolver tecnologia que realmente resolve — software robusto, hardware confiável e serviços especializados trabalhando de forma integrada para que sua operação funcione com eficiência e total conformidade.</p>
-        <div class="sobre-badges">
-          <span class="badge">ISO 9001</span>
-          <span class="badge">ISO 17025</span>
-          <span class="badge">ISO 14001</span>
-          <span class="badge">ISO 45001</span>
-        </div>
-      </div>
-      <div class="sobre-cards reveal">
-        <div class="sobre-card">
-          <div class="sobre-icon"></div>
-          <h4>Missão</h4>
-          <p>Simplificar a conformidade técnica com tecnologia acessível, integrada e confiável.</p>
-        </div>
-        <div class="sobre-card">
-          <div class="sobre-icon"></div>
-          <h4>Visão</h4>
-          <p>Ser referência nacional em soluções integradas de qualidade e metrologia.</p>
-        </div>
-        <div class="sobre-card">
-          <div class="sobre-icon"></div>
-          <h4>Valores</h4>
-          <p>Precisão, rastreabilidade, inovação contínua e compromisso com quem depende de conformidade.</p>
-        </div>
-      </div>
-    </div>
-  </section>
+</main>
 
-  <!-- ── O QUE ESTAMOS CONSTRUINDO ──────────────────────────────── -->
-  <section id="areas" class="section areas-section">
-    <div class="container">
-      <div class="section-header reveal">
-        <span class="section-tag">O que vem por aí</span>
-        <h2>Três frentes, uma visão integrada</h2>
-        <p>Estamos trabalhando em soluções que cobrem toda a cadeia da qualidade — do dado ao certificado, do sensor ao relatório.</p>
-      </div>
-
-      <div class="areas-grid">
-        <div class="area-card reveal" data-delay="0">
-          <div class="area-icon software">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
-          </div>
-          <div class="area-tag">Software</div>
-          <h3>Sistema de Gestão Integrada</h3>
-          <p>Uma plataforma completa para gestão da qualidade. Certificados, ordens de serviço, calibrações, auditorias e muito mais — em um único sistema projetado para laboratórios e indústrias.</p>
-          <div class="area-status">
-            <span class="status-dot"></span>
-            Em desenvolvimento ativo
-          </div>
-        </div>
-
-        <div class="area-card reveal" data-delay="100">
-          <div class="area-icon hardware">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2a10 10 0 1 0 10 10"/><path d="M12 6v6l4 2"/><circle cx="18" cy="6" r="3"/></svg>
-          </div>
-          <div class="area-tag">Hardware</div>
-          <h3>Instrumentação Metrológica</h3>
-          <p>Equipamentos de medição, monitoramento e calibração desenvolvidos para aplicações críticas. Rastreabilidade garantida, conectividade integrada ao sistema de gestão.</p>
-          <div class="area-status">
-            <span class="status-dot yellow"></span>
-            Em planejamento
-          </div>
-        </div>
-
-        <div class="area-card reveal" data-delay="200">
-          <div class="area-icon servicos">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-          </div>
-          <div class="area-tag">Serviços</div>
-          <h3>Consultoria & Capacitação</h3>
-          <p>Implantação de sistemas de qualidade, auditorias técnicas e treinamentos especializados. Expertise de quem conhece a norma e a prática do laboratório.</p>
-          <div class="area-status">
-            <span class="status-dot yellow"></span>
-            Em breve
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ── EM BREVE ────────────────────────────────────────────────── -->
-  <section class="section breve-section">
-    <div class="container">
-      <div class="breve-box reveal">
-        <span class="section-tag">Novidades a caminho</span>
-        <h2>Estamos quase lá</h2>
-        <p>Grandes atualizações chegando em breve. Acompanhe o progresso da FQCORE e seja um dos primeiros a conhecer nossas soluções quando lançarmos.</p>
-        <div class="breve-pills">
-          <span class="pill">Lançamento do Software</span>
-          <span class="pill">Sistemas de Monitoramento</span>
-          <span class="pill">Integração IoT</span>
-          <span class="pill">Auditorias e Consultorias</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ── FOOTER ──────────────────────────────────────────────────── -->
-  <footer>
-    <div class="container footer-simple">
-      <a href="#inicio" class="logo"><span class="logo-q">FQ</span>CORE</a>
-      <span>© 2026 FQCORE Ltda. Todos os direitos reservados.</span>
-      <span class="footer-tagline">Tecnologia em Qualidade</span>
-    </div>
-  </footer>
-
-  <script src="script.js"></script>
+<footer>
+  <div class="wrap">
+    <img src="logo-fqcore-claro.png" alt="FQCORE" width="127" height="18">
+    <span>Gestão da qualidade e metrologia</span>
+    <a href="https://app.fqcore.com.br/login">Entrar no sistema</a>
+    <span class="right">São Paulo / SP</span>
+  </div>
+</footer>
 </body>
 </html>

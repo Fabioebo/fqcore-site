@@ -1,0 +1,1169 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ferramentas FQCORE</title>
+<meta name="description" content="Calculadoras gratuitas de metrologia: PT100 (Callendar–Van Dusen), SPRT (ITS-90), termopares, tolerância de classe, regra de decisão, fator k, En e escore z, transmissor e conversão de unidades.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Condensed:wght@600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="site.css">
+<style>
+.tools-head { padding-block: 40px 22px; display: grid; gap: 12px; }
+.tools-head .lead { color: var(--muted); font-size: 1.05rem; }
+.tools-layout { display: grid; grid-template-columns: 230px minmax(0, 1fr); gap: 24px; align-items: start; margin-bottom: 56px; }
+.tabs { display: grid; gap: 14px; position: sticky; top: calc(70px + env(safe-area-inset-top, 0px)); }
+.tab-grupo { display: grid; gap: 2px; }
+.tab-grupo .label { padding: 0 10px 4px; }
+.tabs button { font: 500 0.92rem var(--f-body); color: var(--text); background: transparent; border: 0; border-left: 3px solid transparent; padding: 7px 10px; cursor: pointer; text-align: left; border-radius: 0 3px 3px 0; }
+.tabs button:hover { background: var(--panel); }
+.tabs button[aria-selected="true"] { background: var(--panel); color: var(--accent-dark); font-weight: 600; border-left-color: var(--accent); }
+.tool { background: var(--panel); border: 1px solid var(--border); border-radius: 3px; padding: 22px; display: grid; gap: 20px; }
+.tool-head { display: grid; gap: 6px; padding-bottom: 16px; border-bottom: 1px solid var(--border-light); }
+.tool-head h2 { font-size: 1.45rem; }
+.tool-head p { color: var(--muted); }
+.etapas { counter-reset: etapa; gap: 12px; }
+.etapa { counter-increment: etapa; border: 1px solid var(--border); border-radius: 3px; background: var(--panel); padding: 12px 14px 14px; display: grid; gap: 10px; }
+.etapa-tit { display: flex; align-items: center; gap: 8px; font-weight: 600; font-size: 0.92rem; }
+.etapa-tit::before { content: counter(etapa); flex: none; width: 1.45rem; height: 1.45rem; border-radius: 50%; background: var(--accent); color: #fff; display: grid; place-items: center; font: 600 0.75rem var(--f-mono); }
+.etapa-tit small { font-weight: 400; color: var(--muted); font-size: 0.82rem; }
+.check { display: flex; gap: 8px; align-items: center; font-size: 0.9rem; }
+.passo { font-family: var(--f-mono); font-size: 0.72rem; letter-spacing: .07em; text-transform: uppercase; color: var(--accent-dark); font-weight: 600; padding-top: 8px; border-top: 1px solid var(--border-light); margin-top: 4px; }
+details.como { font-size: 0.85rem; color: var(--muted); border-top: 1px solid var(--border-light); padding-top: 12px; }
+details.como summary { cursor: pointer; font-weight: 600; color: var(--text); }
+details.como p { margin-top: 8px; max-width: 80ch; }
+.tool-grid { display: grid; grid-template-columns: minmax(0, 380px) minmax(0, 1fr); gap: 24px; align-items: start; }
+.form { display: grid; gap: 12px; align-content: start; }
+.form .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.form .row3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+.field { display: grid; gap: 4px; }
+.field label { font-size: 0.8rem; font-weight: 600; color: var(--muted); }
+.field input, .field select, .field textarea { font: 400 0.95rem var(--f-mono); color: var(--text); background: var(--panel); border: 1px solid var(--border); border-radius: 3px; padding: 7px 9px; width: 100%; }
+.field textarea { min-height: 150px; resize: vertical; line-height: 1.5; }
+.field input:focus, .field select:focus, .field textarea:focus { outline: 2px solid var(--accent); outline-offset: 0; border-color: var(--accent); }
+.field .hint { font-size: 0.78rem; color: var(--muted); }
+.seg { display: flex; flex-wrap: wrap; gap: 0; }
+.seg label { font-size: 0.85rem; border: 1px solid var(--border); padding: 6px 12px; cursor: pointer; background: var(--toolbar); margin-right: -1px; }
+.seg label:first-child { border-radius: 3px 0 0 3px; }
+.seg label:last-child { border-radius: 0 3px 3px 0; }
+.seg input { position: absolute; opacity: 0; pointer-events: none; }
+.seg input:checked + span { color: var(--accent-dark); font-weight: 600; }
+.seg label:has(input:checked) { background: var(--accent-wash); border-color: var(--accent); position: relative; z-index: 1; }
+.seg label:has(input:focus-visible) { outline: 2px solid var(--accent); }
+.out { display: grid; gap: 14px; align-content: start; min-width: 0; }
+.result { border: 1px solid var(--border); border-radius: 3px; background: var(--toolbar); padding: 14px 16px; display: grid; gap: 4px; }
+.result .big { font-family: var(--f-mono); font-size: clamp(1.4rem, 3.4vw, 1.9rem); font-weight: 600; font-variant-numeric: tabular-nums; color: var(--text); overflow-wrap: anywhere; }
+.result .sub { font-family: var(--f-mono); font-size: 0.82rem; color: var(--muted); overflow-wrap: anywhere; }
+.result.err { background: var(--bad-wash); border-color: var(--bad); }
+.result.err .big { font-size: 1rem; color: var(--bad); font-family: var(--f-body); }
+.kv { display: grid; grid-template-columns: max-content 1fr; gap: 4px 14px; font-family: var(--f-mono); font-size: 0.86rem; font-variant-numeric: tabular-nums; }
+.kv dt { color: var(--muted); }
+.kv dd { margin: 0; overflow-wrap: anywhere; }
+.tbl-wrap { border: 1px solid var(--border); border-radius: 3px; overflow: auto; max-height: 460px; }
+.tbl { width: 100%; border-collapse: collapse; font-family: var(--f-mono); font-size: 0.82rem; font-variant-numeric: tabular-nums; }
+.tbl th { position: sticky; top: 0; background: var(--toolbar); text-align: right; font-size: 0.66rem; letter-spacing: .05em; text-transform: uppercase; color: var(--muted); padding: 6px 10px; border-bottom: 1px solid var(--border); font-weight: 600; white-space: nowrap; }
+.tbl td { text-align: right; padding: 4px 10px; border-bottom: 1px solid var(--border-light); white-space: nowrap; }
+.tbl tr:nth-child(even) td { background: var(--zebra); }
+.tbl-bar { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
+.tbl-bar h3 { font-size: 0.95rem; }
+.msg { font-size: 0.82rem; color: var(--ok); }
+.btn-sm { padding: 6px 12px; font-size: 0.85rem; }
+.note { font-size: 0.82rem; color: var(--muted); max-width: 80ch; }
+.warn-box { font-size: 0.86rem; background: var(--warn-wash); color: var(--text); border-left: 3px solid var(--warn); padding: 10px 12px; border-radius: 0 3px 3px 0; }
+.st-inline { margin-left: 6px; }
+.decbar { display: block; width: 180px; height: 20px; }
+.decbar .zona-ok { fill: var(--ok-wash); }
+.decbar .zona-guarda { fill: var(--warn-wash); }
+.decbar .lim { stroke: var(--text); stroke-width: 1.5; }
+.decbar .int { stroke: var(--accent); stroke-width: 2; }
+.decbar .pt { fill: var(--accent); }
+.tbl td.esq { text-align: left; }
+.contrib { display: flex; align-items: center; gap: 8px; justify-content: flex-end; }
+.contrib i { display: inline-block; height: 8px; background: var(--accent); border-radius: 1px; min-width: 1px; }
+.cta { border: 1px solid var(--accent); background: var(--accent-wash); border-radius: 3px; padding: 12px 14px; font-size: 0.9rem; display: flex; gap: 12px; align-items: center; justify-content: space-between; flex-wrap: wrap; }
+@media (max-width: 860px) { .tool-grid, .tools-layout { grid-template-columns: 1fr; } .tabs { position: static; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); } }
+@media (max-width: 480px) { .form .row3 { grid-template-columns: 1fr 1fr; } .tool { padding: 14px; } .tabs button { padding: 6px 8px; font-size: 0.86rem; } }
+</style>
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="theme-color" content="#13294B">
+<link rel="canonical" href="https://fqcore.com.br/ferramentas.html">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:site_name" content="FQCORE">
+<meta property="og:title" content="Ferramentas FQCORE">
+<meta property="og:description" content="Calculadoras gratuitas de metrologia: PT100 (Callendar–Van Dusen), SPRT (ITS-90), termopares, tolerância de classe, regra de decisão, fator k, En e escore z, transmissor e conversão de unidades.">
+<meta property="og:url" content="https://fqcore.com.br/ferramentas.html">
+<meta property="og:image" content="https://fqcore.com.br/og-fqcore.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+<body>
+
+<header class="titlebar">
+  <div class="wrap">
+    <a href="index.html" class="marca" aria-label="FQCORE, página inicial"><img src="logo-fqcore-claro.png" alt="FQCORE" width="155" height="22"></a>
+    <nav class="topnav" aria-label="Principal">
+      <details class="dd"><summary>Produtos</summary><div class="dd-painel dd-produtos"><a href="produto-17025.html"><b>FQCORE 17025</b><span>Laboratórios de calibração e ensaio</span></a><a href="produto-9001.html"><b>FQCORE 9001</b><span>Sistema de gestão da qualidade</span></a><a href="produto-equipamentos.html"><b>FQCORE Equipamentos</b><span>Instrumentos e calibrações</span></a><a href="thermolog.html"><b>ThermoLog</b><span>Monitoramento ambiental</span></a></div></details>
+      <details class="dd ativo"><summary>Recursos</summary><div class="dd-painel"><a href="duvidas.html"><b>Artigos</b><span>Metrologia, ISO/IEC 17025 e ISO 9001</span></a><a href="ferramentas.html" aria-current="page"><b>Calculadoras</b><span>Temperatura, incerteza e conversões</span></a><a href="autoavaliacao.html"><b>Autoavaliação ISO/IEC 17025</b><span>34 perguntas por cláusula</span></a><a href="autoavaliacao-9001.html"><b>Autoavaliação ISO 9001</b><span>32 perguntas por cláusula</span></a></div></details>
+      <a href="index.html#sobre">Sobre</a>
+      <a href="index.html#contato">Contato</a>
+    </nav>
+    <div class="acoes">
+      <a href="https://app.fqcore.com.br/login" class="entrar">Entrar</a>
+      <a href="index.html#contato" class="btn btn-primary">Agendar conversa</a>
+    </div>
+    <details class="menu-mob"><summary aria-label="Abrir menu">Menu</summary>
+      <div class="mob-painel">
+        <span class="label">Produtos</span><a href="produto-17025.html">FQCORE 17025</a><a href="produto-9001.html">FQCORE 9001</a><a href="produto-equipamentos.html">FQCORE Equipamentos</a><a href="thermolog.html">ThermoLog</a>
+        <span class="label">Recursos</span><a href="duvidas.html">Artigos</a><a href="ferramentas.html" aria-current="page">Calculadoras</a><a href="autoavaliacao.html">Autoavaliação ISO/IEC 17025</a><a href="autoavaliacao-9001.html">Autoavaliação ISO 9001</a>
+        <span class="label">Empresa</span><a href="index.html#sobre">Sobre</a><a href="index.html#contato">Contato</a><a href="https://app.fqcore.com.br/login">Entrar no sistema</a>
+      </div>
+    </details>
+  </div>
+</header>
+<script src="site.js" defer></script>
+
+<main class="wrap">
+  <div class="tools-head">
+    <h1>Calculadoras para metrologia</h1>
+    <p class="lead">Calculadoras para calibração de temperatura, incerteza de medição e conversões. Os campos já vêm preenchidos com um exemplo, e as tabelas podem ser copiadas para o Excel.</p>
+  </div>
+
+  <div class="tools-layout">
+  <div class="tabs" role="tablist" aria-label="Ferramentas" aria-orientation="vertical">
+    <div class="tab-grupo" role="presentation"><span class="label">Temperatura</span>
+      <button role="tab" id="tab-cvd" aria-controls="p-cvd" aria-selected="true">PT100 (Callendar–Van Dusen)</button>
+      <button role="tab" id="tab-its" aria-controls="p-its" aria-selected="false" tabindex="-1">SPRT (ITS-90)</button>
+      <button role="tab" id="tab-tc" aria-controls="p-tc" aria-selected="false" tabindex="-1">Termopar</button>
+      <button role="tab" id="tab-tol" aria-controls="p-tol" aria-selected="false" tabindex="-1">Tolerância de classe</button>
+    </div>
+    <div class="tab-grupo" role="presentation"><span class="label">Incerteza e conformidade</span>
+      <button role="tab" id="tab-dec" aria-controls="p-dec" aria-selected="false" tabindex="-1">Regra de decisão</button>
+      <button role="tab" id="tab-esp" aria-controls="p-esp" aria-selected="false" tabindex="-1">Incerteza da especificação</button>
+      <button role="tab" id="tab-k" aria-controls="p-k" aria-selected="false" tabindex="-1">Fator k e νeff</button>
+      <button role="tab" id="tab-ep" aria-controls="p-ep" aria-selected="false" tabindex="-1">En, z e ζ</button>
+    </div>
+    <div class="tab-grupo" role="presentation"><span class="label">Conversões</span>
+      <button role="tab" id="tab-tx" aria-controls="p-tx" aria-selected="false" tabindex="-1">Transmissor</button>
+      <button role="tab" id="tab-un" aria-controls="p-un" aria-selected="false" tabindex="-1">Unidades</button>
+    </div>
+  </div>
+  <div class="tools-panels">
+
+  <!-- ── PT100 / CVD ─────────────────────────────────────────────────── -->
+  <section class="tool" id="p-cvd" role="tabpanel" aria-labelledby="tab-cvd">
+    <div class="tool-head"><h2>PT100 (Callendar–Van Dusen)</h2><p>Calcula os coeficientes A, B e C a partir dos pontos de calibração de uma termorresistência e converte entre temperatura e resistência.</p></div>
+    <div class="tool-grid">
+      <div class="form etapas">
+        <div class="etapa">
+          <div class="etapa-tit">Origem dos coeficientes</div>
+          <div class="seg" role="radiogroup" aria-label="Origem dos coeficientes">
+            <label><input type="radio" name="cvd-src" id="cvd-src-cal" value="cal" checked><span>Gerar da calibração</span></label>
+            <label><input type="radio" name="cvd-src" id="cvd-src-iec" value="iec"><span>IEC 60751</span></label>
+            <label><input type="radio" name="cvd-src" id="cvd-src-man" value="man"><span>Digitar</span></label>
+          </div>
+        </div>
+        <div class="etapa" id="cvd-pontos-box">
+          <div class="etapa-tit">Pontos da calibração</div>
+          <div class="field">
+            <label for="cvd-pontos">Temperatura (°C) e resistência (Ω), uma linha por ponto</label>
+            <textarea id="cvd-pontos" spellcheck="false">-40	84,2800
+          0	100,0116
+          100	138,5237
+          200	175,8785
+          300	212,0782</textarea>
+            <span class="hint">Temperatura do padrão e resistência medida no sensor. Cole direto do Excel ou separe por ponto e vírgula. Com ponto abaixo de 0 °C, o coeficiente C também é ajustado.</span>
+          </div>
+          <label class="check"><input type="checkbox" id="cvd-fixar"> Fixar R0 no valor informado na próxima etapa</label>
+        </div>
+        <div class="etapa">
+          <div class="etapa-tit">Sensor e coeficientes</div>
+          <div class="row2">
+            <div class="field"><label for="cvd-r0">R0 (Ω)</label><input id="cvd-r0" value="100" inputmode="decimal"></div>
+            <div class="field"><label for="cvd-tipo">Sensor</label>
+              <select id="cvd-tipo"><option value="100">PT100</option><option value="500">PT500</option><option value="1000">PT1000</option><option value="">Outro</option></select></div>
+          </div>
+          <div class="row3" id="cvd-coefs">
+            <div class="field"><label for="cvd-a">A</label><input id="cvd-a" value="3,9083E-3" inputmode="decimal"></div>
+            <div class="field"><label for="cvd-b">B</label><input id="cvd-b" value="-5,775E-7" inputmode="decimal"></div>
+            <div class="field"><label for="cvd-c">C</label><input id="cvd-c" value="-4,183E-12" inputmode="decimal"></div>
+          </div>
+        </div>
+        <div class="etapa">
+          <div class="etapa-tit">Converter um valor</div>
+          <div class="row2">
+            <div class="field"><label for="cvd-t">Temperatura (°C)</label><input id="cvd-t" value="25" inputmode="decimal"></div>
+            <div class="field"><label for="cvd-r">ou resistência (Ω)</label><input id="cvd-r" value="" inputmode="decimal" placeholder="ou digite aqui"></div>
+          </div>
+        </div>
+        <div class="etapa">
+          <div class="etapa-tit">Gerar tabela</div>
+          <div class="row3">
+            <div class="field"><label for="cvd-de">De (°C)</label><input id="cvd-de" value="-50" inputmode="decimal"></div>
+            <div class="field"><label for="cvd-ate">Até (°C)</label><input id="cvd-ate" value="250" inputmode="decimal"></div>
+            <div class="field"><label for="cvd-passo">Passo</label><input id="cvd-passo" value="10" inputmode="decimal"></div>
+          </div>
+        </div>
+      </div>
+      <div class="out" id="cvd-out"></div>
+    </div>
+    <details class="como"><summary>Como é calculado</summary><p>R(t) = R0·[1 + A·t + B·t² + C·(t − 100)·t³], com o termo C só abaixo de 0 °C. Coeficientes padrão da IEC 60751: A = 3,9083×10⁻³, B = −5,775×10⁻⁷, C = −4,183×10⁻¹². O ajuste por mínimos quadrados usa todos os pontos informados.</p></details>
+  </section>
+
+  <!-- ── SPRT / ITS-90 ───────────────────────────────────────────────── -->
+  <section class="tool" id="p-its" role="tabpanel" aria-labelledby="tab-its" hidden>
+    <div class="tool-head"><h2>SPRT (ITS-90)</h2><p>Converte resistência em temperatura para termômetros de resistência de platina padrão, com as funções de desvio da ITS-90.</p></div>
+    <div class="tool-grid">
+      <div class="form etapas">
+        <div class="etapa">
+          <div class="etapa-tit">Subfaixa e tipo de dado</div>
+          <div class="field"><label for="its-faixa">Subfaixa da ITS-90</label><select id="its-faixa"></select></div>
+          <div class="seg" role="radiogroup" aria-label="Dados de entrada">
+            <label><input type="radio" name="its-src" id="its-src-cmp" value="cmp" checked><span>Pontos de comparação</span></label>
+            <label><input type="radio" name="its-src" id="its-src-pf" value="pf"><span>Pontos fixos</span></label>
+            <label><input type="radio" name="its-src" id="its-src-coef" value="coef"><span>Coeficientes prontos</span></label>
+          </div>
+        </div>
+        <div class="etapa">
+          <div class="etapa-tit">Dados da calibração</div>
+          <div class="field"><label for="its-rtpw">R no ponto triplo da água, R(0,01 °C) (Ω)</label><input id="its-rtpw" value="25,5432" inputmode="decimal"></div>
+          <div class="field" id="its-cmp-box">
+            <label for="its-cmp">t90 do padrão (°C) e R do SPRT (Ω), uma linha por ponto</label>
+            <textarea id="its-cmp" spellcheck="false"></textarea>
+            <span class="hint">Calibração por comparação em banho ou forno, em temperaturas quaisquer da subfaixa, sem o ponto de 0,01 °C (ele vai no campo acima).</span>
+          </div>
+          <div id="its-coef-box" class="row3"></div>
+          <div id="its-pf-box" class="form" hidden></div>
+        </div>
+        <div class="etapa">
+          <div class="etapa-tit">Converter um valor</div>
+          <div class="row2">
+            <div class="field"><label for="its-r">Resistência medida (Ω)</label><input id="its-r" value="35,2410" inputmode="decimal"></div>
+            <div class="field"><label for="its-t">ou temperatura (°C)</label><input id="its-t" value="" inputmode="decimal" placeholder="ou digite aqui"></div>
+          </div>
+        </div>
+        <div class="etapa">
+          <div class="etapa-tit">Gerar tabela</div>
+          <div class="row3">
+            <div class="field"><label for="its-de">De (°C)</label><input id="its-de" value="0" inputmode="decimal"></div>
+            <div class="field"><label for="its-ate">Até (°C)</label><input id="its-ate" value="400" inputmode="decimal"></div>
+            <div class="field"><label for="its-passo">Passo</label><input id="its-passo" value="10" inputmode="decimal"></div>
+          </div>
+        </div>
+      </div>
+      <div class="out" id="its-out"></div>
+    </div>
+    <details class="como"><summary>Como é calculado</summary><p>W = R(T90) / R(0,01 °C). A temperatura sai de W − ΔW(W) = Wr(T90), com a função de referência e as funções de desvio da ITS-90 para a subfaixa escolhida. Os valores do exemplo são ilustrativos.</p></details>
+  </section>
+
+  <!-- ── Termopar ────────────────────────────────────────────────────── -->
+  <section class="tool" id="p-tc" role="tabpanel" aria-labelledby="tab-tc" hidden>
+    <div class="tool-head"><h2>Termopar</h2><p>Ajusta a função de desvio de um termopar a partir dos pontos de calibração e converte entre f.e.m. e temperatura pelas tabelas NIST.</p></div>
+    <div class="tool-grid">
+      <div class="form etapas">
+        <div class="etapa">
+          <div class="etapa-tit">Tipo e modo</div>
+          <div class="field"><label for="tc-tipo">Tipo de termopar</label>
+            <select id="tc-tipo"><option>K</option><option>J</option><option>T</option><option>E</option><option>N</option><option>R</option><option>S</option><option>B</option></select>
+            <span class="hint" id="tc-faixa"></span></div>
+          <div class="seg" role="radiogroup" aria-label="Modo do termopar">
+            <label><input type="radio" name="tc-src" id="tc-src-cal" value="cal" checked><span>Gerar da calibração</span></label>
+            <label><input type="radio" name="tc-src" id="tc-src-ref" value="ref"><span>Só tabela NIST</span></label>
+          </div>
+        </div>
+        <div class="etapa" id="tc-cal-box">
+          <div class="etapa-tit">Pontos da calibração</div>
+          <div class="field">
+            <label for="tc-pontos">Temperatura do padrão (°C) e f.e.m. medida (mV), uma linha por ponto</label>
+            <textarea id="tc-pontos" spellcheck="false"></textarea>
+            <span class="hint">F.e.m. medida com a junta na temperatura informada na próxima etapa.</span>
+          </div>
+          <div class="field"><label for="tc-grau">Grau da função de desvio</label>
+            <select id="tc-grau"><option value="1">1 · ΔE = d1·t</option><option value="2" selected>2 · ΔE = d1·t + d2·t²</option><option value="3">3 · ΔE = d1·t + d2·t² + d3·t³</option></select></div>
+        </div>
+        <div class="etapa">
+          <div class="etapa-tit">Junta de referência</div>
+          <div class="field"><label for="tc-junta">Temperatura da junta (°C)</label><input id="tc-junta" value="0" inputmode="decimal">
+            <span class="hint">0 °C para banho de gelo. Use a temperatura dos bornes quando não houver compensação.</span></div>
+        </div>
+        <div class="etapa">
+          <div class="etapa-tit">Converter um valor</div>
+          <div class="row2">
+            <div class="field"><label for="tc-mv">F.e.m. medida (mV)</label><input id="tc-mv" value="12,209" inputmode="decimal"></div>
+            <div class="field"><label for="tc-t">ou temperatura (°C)</label><input id="tc-t" value="" inputmode="decimal" placeholder="ou digite aqui"></div>
+          </div>
+        </div>
+        <div class="etapa">
+          <div class="etapa-tit">Gerar tabela</div>
+          <div class="row3">
+            <div class="field"><label for="tc-de">De (°C)</label><input id="tc-de" value="0" inputmode="decimal"></div>
+            <div class="field"><label for="tc-ate">Até (°C)</label><input id="tc-ate" value="500" inputmode="decimal"></div>
+            <div class="field"><label for="tc-passo">Passo</label><input id="tc-passo" value="10" inputmode="decimal"></div>
+          </div>
+        </div>
+      </div>
+      <div class="out" id="tc-out"></div>
+    </div>
+    <details class="como"><summary>Como é calculado</summary><p>Funções de referência NIST (SRD 60) da ITS-90, as mesmas da IEC 60584-1. A função de desvio não tem termo constante, porque com a junta a 0 °C a f.e.m. é zero em qualquer termopar. Com a junta fora de 0 °C, o desvio do próprio fio na junta entra no ajuste. A conversão de mV para °C resolve a função numericamente, sem as aproximações inversas.</p></details>
+  </section>
+
+  <!-- ── Tolerância de classe ────────────────────────────────────────── -->
+  <section class="tool" id="p-tol" role="tabpanel" aria-labelledby="tab-tol" hidden>
+    <div class="tool-head"><h2>Tolerância de classe</h2><p>Mostra a tolerância das classes da IEC 60751 (termorresistências) e da IEC 60584-1 e ASTM E230 (termopares) em cada temperatura.</p></div>
+    <div class="tool-grid">
+      <div class="form etapas">
+        <div class="etapa">
+          <div class="etapa-tit">Sensor</div>
+          <div class="field"><label for="tol-sensor">Tipo de sensor</label>
+            <select id="tol-sensor">
+              <option value="RTD">Termorresistência (PT100, PT1000) · IEC 60751</option>
+              <option value="K">Termopar tipo K · IEC 60584-1 e ASTM E230</option><option value="J">Termopar tipo J · IEC 60584-1 e ASTM E230</option>
+              <option value="T">Termopar tipo T · IEC 60584-1 e ASTM E230</option><option value="E">Termopar tipo E · IEC 60584-1 e ASTM E230</option>
+              <option value="N">Termopar tipo N · IEC 60584-1 e ASTM E230</option><option value="R">Termopar tipo R · IEC 60584-1 e ASTM E230</option>
+              <option value="S">Termopar tipo S · IEC 60584-1 e ASTM E230</option><option value="B">Termopar tipo B · IEC 60584-1 e ASTM E230</option>
+            </select></div>
+          <div class="field" id="tol-r0-box"><label for="tol-r0">R0 (Ω)</label><input id="tol-r0" value="100" inputmode="decimal"></div>
+        </div>
+        <div class="etapa">
+          <div class="etapa-tit">Em uma temperatura</div>
+          <div class="field"><label for="tol-t">Temperatura (°C)</label><input id="tol-t" value="100" inputmode="decimal"></div>
+        </div>
+        <div class="etapa">
+          <div class="etapa-tit">Gerar tabela</div>
+          <div class="row3">
+            <div class="field"><label for="tol-de">De (°C)</label><input id="tol-de" value="-50" inputmode="decimal"></div>
+            <div class="field"><label for="tol-ate">Até (°C)</label><input id="tol-ate" value="400" inputmode="decimal"></div>
+            <div class="field"><label for="tol-passo">Passo</label><input id="tol-passo" value="50" inputmode="decimal"></div>
+          </div>
+        </div>
+      </div>
+      <div class="out" id="tol-out"></div>
+    </div>
+    <details class="como"><summary>Como é calculado</summary><p>Termorresistência: tolerância ±(a + b·|t|), com faixa de validade diferente para sensor de fio e de filme. Termopar: tolerâncias das classes 1, 2 e 3 da IEC 60584-1, em que vale a parte fixa ou a proporcional a |t| conforme a faixa, e os limites padrão e especiais (SLE) da ASTM E230, em que vale o maior entre a parte fixa e a porcentagem de |t|. Os limites da ASTM E230 estão incluídos de 0 °C para cima (tipo B, a partir de 870 °C). “—” indica que a classe não cobre aquela temperatura.</p></details>
+  </section>
+
+  <!-- ── Regra de decisão ────────────────────────────────────────────── -->
+  <section class="tool" id="p-dec" role="tabpanel" aria-labelledby="tab-dec" hidden>
+    <div class="tool-head"><h2>Regra de decisão</h2><p>Aplica a regra de decisão da ILAC G8 a cada resultado, considerando a incerteza expandida e os limites de especificação.</p></div>
+    <div class="tool-grid">
+      <div class="form etapas">
+        <div class="etapa">
+          <div class="etapa-tit">Regra</div>
+          <div class="seg" role="radiogroup" aria-label="Regra de decisão">
+            <label><input type="radio" name="dec-modo" id="dec-modo-nb" value="naobinaria" checked><span>Não binária</span></label>
+            <label><input type="radio" name="dec-modo" id="dec-modo-b" value="binaria"><span>Banda de guarda</span></label>
+            <label><input type="radio" name="dec-modo" id="dec-modo-s" value="simples"><span>Aceitação simples</span></label>
+          </div>
+          <span class="hint" id="dec-hint"></span>
+        </div>
+        <div class="etapa">
+          <div class="etapa-tit">Limites de especificação</div>
+          <div class="row2">
+            <div class="field"><label for="dec-li">Limite inferior</label><input id="dec-li" value="-0,50" inputmode="decimal"></div>
+            <div class="field"><label for="dec-ls">Limite superior</label><input id="dec-ls" value="0,50" inputmode="decimal"></div>
+          </div>
+          <span class="hint">Para erro máximo admissível de ±0,50, use −0,50 e 0,50. Deixe um em branco para limite de um lado só.</span>
+        </div>
+        <div class="etapa">
+          <div class="etapa-tit">Resultados</div>
+          <div class="field"><label for="dec-pts">Valor medido (ou erro) e U expandida, uma linha por ponto</label>
+            <textarea id="dec-pts" spellcheck="false">0,12	0,10
+          0,35	0,10
+          0,46	0,10
+          0,55	0,10
+          -0,68	0,10</textarea></div>
+        </div>
+      </div>
+      <div class="out" id="dec-out"></div>
+    </div>
+    <details class="como"><summary>Como é calculado</summary><p>Segundo a ILAC G8:2019. Aceitação simples: só o valor medido decide (w = 0). Banda de guarda: conforme só se o valor estiver a pelo menos U dos limites (w = U). Não binária: conforme, conforme condicional, não conforme condicional ou não conforme. A regra usada tem que estar combinada com o cliente e declarada no certificado (ISO/IEC 17025, 7.1.3 e 7.8.6).</p></details>
+  </section>
+
+  <!-- ── Incerteza da especificação ──────────────────────────────────── -->
+  <section class="tool" id="p-esp" role="tabpanel" aria-labelledby="tab-esp" hidden>
+    <div class="tool-head"><h2>Incerteza da especificação</h2><p>Transforma a especificação do fabricante em incerteza padrão para usar no orçamento de incerteza.</p></div>
+    <div class="tool-grid">
+      <div class="form etapas">
+        <div class="etapa">
+          <div class="etapa-tit">Leitura e instrumento</div>
+          <div class="row2">
+            <div class="field"><label for="esp-leit">Leitura(s)</label><input id="esp-leit" value="10; 5; 1" inputmode="decimal">
+              <span class="hint">Uma ou várias, separadas por ponto e vírgula.</span></div>
+            <div class="field"><label for="esp-un">Unidade</label><input id="esp-un" value="V"></div>
+          </div>
+          <div class="row2">
+            <div class="field"><label for="esp-faixa">Faixa (fundo de escala)</label><input id="esp-faixa" value="20" inputmode="decimal"></div>
+            <div class="field"><label for="esp-res">Resolução (1 dígito)</label><input id="esp-res" value="0,0001" inputmode="decimal"></div>
+          </div>
+        </div>
+        <div class="etapa">
+          <div class="etapa-tit">Especificação do fabricante ±( … )</div>
+          <div class="row2">
+            <div class="field"><label for="esp-pl">% da leitura</label><input id="esp-pl" value="0,02" inputmode="decimal"></div>
+            <div class="field"><label for="esp-pf">% da faixa</label><input id="esp-pf" value="0,005" inputmode="decimal"></div>
+          </div>
+          <div class="row2">
+            <div class="field"><label for="esp-dig">Dígitos (contagens)</label><input id="esp-dig" value="2" inputmode="decimal"></div>
+            <div class="field"><label for="esp-fixo">Valor fixo (na unidade)</label><input id="esp-fixo" value="0" inputmode="decimal"></div>
+          </div>
+        </div>
+        <div class="etapa">
+          <div class="etapa-tit">Distribuição</div>
+          <div class="field"><label for="esp-dist">Distribuição do limite</label>
+            <select id="esp-dist">
+              <option value="ret">Retangular · divisor √3 (especificação do fabricante)</option>
+              <option value="tri">Triangular · divisor √6</option>
+              <option value="norm">Normal · divisor k informado</option>
+            </select></div>
+          <div class="field" id="esp-k-box" hidden><label for="esp-k">k da especificação</label><input id="esp-k" value="2" inputmode="decimal"></div>
+          <label class="check"><input type="checkbox" id="esp-incres"> Somar a resolução separadamente (r / 2√3)</label>
+        </div>
+      </div>
+      <div class="out" id="esp-out"></div>
+    </div>
+    <details class="como"><summary>Como é calculado</summary><p>Limite: a = %leitura·|leitura| + %faixa·faixa + dígitos·resolução + valor fixo. Incerteza padrão u = a/√3 para distribuição retangular, que é como a especificação do fabricante costuma ser tratada (sem informação de nível de confiança). Só some a resolução separadamente se a especificação não a incluir.</p></details>
+  </section>
+
+  <!-- ── Fator k / νeff ──────────────────────────────────────────────── -->
+  <section class="tool" id="p-k" role="tabpanel" aria-labelledby="tab-k" hidden>
+    <div class="tool-head"><h2>Fator k e graus de liberdade efetivos</h2><p>Combina as contribuições de incerteza, calcula os graus de liberdade efetivos e o fator de abrangência pela t de Student.</p></div>
+    <div class="tool-grid">
+      <div class="form etapas">
+        <div class="etapa">
+          <div class="etapa-tit">Contribuições</div>
+          <div class="field"><label for="k-pts">Fonte, u (já com o coeficiente de sensibilidade) e graus de liberdade</label>
+            <textarea id="k-pts" spellcheck="false">Repetibilidade (5 leituras); 0,0180; 4
+          Certificado do padrão; 0,0150
+          Resolução do indicador; 0,0029
+          Estabilidade do banho; 0,0120
+          Homogeneidade do banho; 0,0100</textarea>
+            <span class="hint">Uma linha por fonte, separando por ponto e vírgula ou tabulação. Graus de liberdade em branco valem infinito (tipo B). O exemplo é de uma calibração de PT100, em °C.</span></div>
+        </div>
+        <div class="etapa">
+          <div class="etapa-tit">Probabilidade de abrangência</div>
+          <div class="seg" role="radiogroup" aria-label="Probabilidade de abrangência">
+            <label><input type="radio" name="k-p" id="k-p-9545" value="9545" checked><span>95,45 %</span></label>
+            <label><input type="radio" name="k-p" id="k-p-95" value="95"><span>95 %</span></label>
+          </div>
+        </div>
+        <div class="etapa">
+          <div class="etapa-tit">Resultado medido <small>(opcional)</small></div>
+          <div class="row2">
+            <div class="field"><label for="k-x">Valor</label><input id="k-x" value="100,0436" inputmode="decimal"></div>
+            <div class="field"><label for="k-un">Unidade</label><input id="k-un" value="°C"></div>
+          </div>
+        </div>
+      </div>
+      <div class="out" id="k-out"></div>
+    </div>
+    <details class="como"><summary>Como é calculado</summary><p>uc = √Σui². νeff = uc⁴ / Σ(ui⁴/νi) (Welch–Satterthwaite), truncado para o inteiro de baixo antes de buscar o t de Student, como recomenda o GUM (Anexo G). k = t de Student calculado pela função beta incompleta, conferido contra a tabela G.2 do GUM. U arredondada para dois algarismos significativos, e o resultado na mesma casa decimal.</p></details>
+  </section>
+
+  <!-- ── En / z / zeta ───────────────────────────────────────────────── -->
+  <section class="tool" id="p-ep" role="tabpanel" aria-labelledby="tab-ep" hidden>
+    <div class="tool-head"><h2>En, z e ζ</h2><p>Avalia resultados de ensaio de proficiência e de comparação interlaboratorial pelos índices En, z e ζ.</p></div>
+    <div class="tool-grid">
+      <div class="form etapas">
+        <div class="etapa">
+          <div class="etapa-tit">Índice</div>
+          <div class="seg" role="radiogroup" aria-label="Índice de desempenho">
+            <label><input type="radio" name="ep-modo" id="ep-modo-en" value="en" checked><span>En</span></label>
+            <label><input type="radio" name="ep-modo" id="ep-modo-z" value="z"><span>Escore z</span></label>
+            <label><input type="radio" name="ep-modo" id="ep-modo-zeta" value="zeta"><span>Escore ζ</span></label>
+          </div>
+        </div>
+        <div class="etapa">
+          <div class="etapa-tit">Resultados</div>
+          <div class="field"><label for="ep-pts" id="ep-label"></label>
+            <textarea id="ep-pts" spellcheck="false"></textarea>
+            <span class="hint" id="ep-hint"></span></div>
+        </div>
+      </div>
+      <div class="out" id="ep-out"></div>
+    </div>
+    <details class="como"><summary>Como é calculado</summary><p>En = (x − X) / √(U²lab + U²ref), com incertezas expandidas: |En| ≤ 1 é satisfatório. z = (x − X) / σpt e ζ = (x − X) / √(u²x + u²X), com incertezas padrão: até 2 satisfatório, entre 2 e 3 questionável, a partir de 3 insatisfatório (ISO/IEC 17043 e ISO 13528).</p></details>
+  </section>
+
+  <!-- ── Transmissor ─────────────────────────────────────────────────── -->
+  <section class="tool" id="p-tx" role="tabpanel" aria-labelledby="tab-tx" hidden>
+    <div class="tool-head"><h2>Transmissor</h2><p>Converte entre o valor medido e o sinal de saída de um transmissor e calcula o erro de cada ponto.</p></div>
+    <div class="tool-grid">
+      <div class="form etapas">
+        <div class="etapa">
+          <div class="etapa-tit">Faixa e sinal</div>
+          <div class="row3">
+            <div class="field"><label for="tx-min">Faixa de</label><input id="tx-min" value="0" inputmode="decimal"></div>
+            <div class="field"><label for="tx-max">até</label><input id="tx-max" value="200" inputmode="decimal"></div>
+            <div class="field"><label for="tx-un">Unidade</label><input id="tx-un" value="°C"></div>
+          </div>
+          <div class="field"><label for="tx-sinal">Sinal de saída</label>
+            <select id="tx-sinal"><option value="4,20,mA">4 a 20 mA</option><option value="0,20,mA">0 a 20 mA</option><option value="1,5,V">1 a 5 V</option><option value="0,10,V">0 a 10 V</option><option value="0,5,V">0 a 5 V</option></select></div>
+        </div>
+        <div class="etapa">
+          <div class="etapa-tit">Converter um valor</div>
+          <div class="row2">
+            <div class="field"><label for="tx-x">Valor aplicado</label><input id="tx-x" value="75" inputmode="decimal"></div>
+            <div class="field"><label for="tx-y">ou sinal</label><input id="tx-y" value="" inputmode="decimal" placeholder="ou digite aqui"></div>
+          </div>
+        </div>
+        <div class="etapa">
+          <div class="etapa-tit">Verificar o transmissor <small>(opcional)</small></div>
+          <div class="field"><label for="tx-lido">Sinal lido em 0, 25, 50, 75 e 100 % da faixa</label>
+            <input id="tx-lido" value="4,012; 8,006; 11,995; 16,010; 20,021" inputmode="decimal">
+            <span class="hint">Separe por ponto e vírgula. Calcula o erro de cada ponto.</span></div>
+        </div>
+      </div>
+      <div class="out" id="tx-out"></div>
+    </div>
+    <details class="como"><summary>Como é calculado</summary><p>Conversão linear: sinal = Smin + (valor − Vmin)/(Vmax − Vmin)·(Smax − Smin). O erro em % é calculado sobre o span do sinal.</p></details>
+  </section>
+
+  <!-- ── Unidades ────────────────────────────────────────────────────── -->
+  <section class="tool" id="p-un" role="tabpanel" aria-labelledby="tab-un" hidden>
+    <div class="tool-head"><h2>Conversão de unidades</h2><p>Converte unidades de pressão, força, torque, massa, comprimento, volume, vazão e outras grandezas.</p></div>
+    <div class="tool-grid">
+      <div class="form etapas">
+        <div class="etapa">
+          <div class="etapa-tit">Valor a converter</div>
+          <div class="field"><label for="un-g">Grandeza</label><select id="un-g"></select></div>
+          <div class="row2">
+            <div class="field"><label for="un-v">Valor</label><input id="un-v" value="1" inputmode="decimal"></div>
+            <div class="field"><label for="un-de">Unidade</label><select id="un-de"></select></div>
+          </div>
+        </div>
+      </div>
+      <div class="out" id="un-out"></div>
+    </div>
+    <details class="como"><summary>Como é calculado</summary><p>Fatores exatos por definição (psi, lbf, polegada, libra) ou convencionais: mmHg e inHg a 0 °C, colunas de água com g = 9,80665 m/s² e densidade de 1000 kg/m³.</p></details>
+  </section>
+
+  </div>
+  </div>
+
+  <p class="warn-box">Ferramentas de apoio, de uso livre. Os cálculos foram conferidos contra as tabelas NIST, a IEC 60751 e os valores da ITS-90. Para resultados que vão para certificado, valide o uso no seu procedimento (ISO/IEC 17025, 7.11.2).</p>
+</main>
+
+<footer>
+  <div class="wrap">
+    <img src="logo-fqcore-claro.png" alt="FQCORE" width="127" height="18">
+    <span>Gestão da qualidade e metrologia</span>
+    <a href="index.html">Conheça o FQCORE</a>
+    <span class="right">São Paulo / SP</span>
+  </div>
+</footer>
+
+<script src="ferramentas-calc.js"></script>
+<script>
+(function () {
+  var C = window.FQCalc;
+  function $(id) { return document.getElementById(id); }
+
+  // ── números no formato brasileiro ─────────────────────────────────────
+  function num(s) {
+    s = String(s == null ? "" : s).trim().replace(/\s/g, "").replace(/[−–]/g, "-");
+    if (s === "") { return NaN; }
+    if (s.indexOf(",") >= 0) { s = s.replace(/\./g, "").replace(",", "."); }
+    var v = Number(s);
+    return isFinite(v) ? v : NaN;
+  }
+  function req(id, nome) {
+    var v = num($(id).value);
+    if (isNaN(v)) { throw new Error("Preencha " + nome + " com um número."); }
+    return v;
+  }
+  function fmt(v, casas) {
+    if (!isFinite(v)) { return "—"; }
+    var s = v.toFixed(casas);
+    if (/^-0[.,]?0*$/.test(s)) { s = s.slice(1); }
+    return s.replace(".", ",");
+  }
+  function sci(v, sig) {
+    if (v === 0) { return "0"; }
+    return v.toExponential(sig - 1).replace(".", ",").replace("e", "E").replace("E+", "E");
+  }
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+  function sequencia(de, ate, passo) {
+    if (!(passo > 0)) { throw new Error("O passo da tabela tem que ser maior que zero."); }
+    var n = Math.floor((ate - de) / passo + 1e-9) + 1, out = [], i;
+    if (n < 1) { throw new Error("O fim da tabela tem que ser maior que o início."); }
+    if (n > 2000) { throw new Error("A tabela passaria de 2000 linhas. Aumente o passo."); }
+    for (i = 0; i < n; i++) { out.push(+(de + i * passo).toFixed(10)); }
+    return out;
+  }
+
+  // ── blocos de saída ───────────────────────────────────────────────────
+  function caixa(big, sub) { return '<div class="result" role="status"><span class="big">' + big + '</span>' + (sub ? '<span class="sub">' + sub + '</span>' : '') + '</div>'; }
+  function erro(e) { return '<div class="result err" role="alert"><span class="big">' + esc(e.message || e) + '</span></div>'; }
+  function kv(pares) {
+    var h = '<dl class="kv">', i;
+    for (i = 0; i < pares.length; i++) { h += '<dt>' + pares[i][0] + '</dt><dd>' + pares[i][1] + '</dd>'; }
+    return h + '</dl>';
+  }
+  var tabelas = {};
+  function tabela(id, titulo, cab, linhas) {
+    tabelas[id] = { cab: cab, linhas: linhas };
+    var h = '<div class="tbl-bar"><h3>' + titulo + '</h3><span><span class="msg" id="msg-' + id + '" aria-live="polite"></span> <button type="button" class="btn btn-ghost btn-sm" data-copiar="' + id + '">Copiar para o Excel</button></span></div>';
+    h += '<div class="tbl-wrap"><table class="tbl"><thead><tr>';
+    for (var i = 0; i < cab.length; i++) { h += '<th scope="col">' + cab[i] + '</th>'; }
+    h += '</tr></thead><tbody>';
+    for (var j = 0; j < linhas.length; j++) {
+      h += '<tr>';
+      for (var k = 0; k < linhas[j].length; k++) { h += '<td>' + linhas[j][k] + '</td>'; }
+      h += '</tr>';
+    }
+    return h + '</tbody></table></div>';
+  }
+  document.addEventListener("click", function (ev) {
+    var b = ev.target.closest("[data-copiar]");
+    if (!b) { return; }
+    var t = tabelas[b.getAttribute("data-copiar")], m = $("msg-" + b.getAttribute("data-copiar"));
+    var txt = [t.cab.join("\t")].concat(t.linhas.map(function (l) { return l.join("\t"); })).join("\n");
+    function falhou() { m.textContent = "Não deu pra copiar automaticamente. Selecione a tabela e use Ctrl+C."; m.style.color = "var(--warn)"; }
+    try {
+      navigator.clipboard.writeText(txt).then(function () { m.style.color = ""; m.textContent = "Copiado. Cole no Excel."; }, falhou);
+    } catch (e) { falhou(); }
+  });
+
+  // ── abas ──────────────────────────────────────────────────────────────
+  var abas = Array.prototype.slice.call(document.querySelectorAll('[role="tab"]'));
+  function abrir(tab, foco) {
+    abas.forEach(function (t) {
+      var sel = t === tab;
+      t.setAttribute("aria-selected", sel ? "true" : "false");
+      t.tabIndex = sel ? 0 : -1;
+      $(t.getAttribute("aria-controls")).hidden = !sel;
+    });
+    if (foco) { tab.focus(); }
+    try { history.replaceState(null, "", "#" + tab.id.replace("tab-", "")); } catch (e) {}
+  }
+  abas.forEach(function (t, i) {
+    t.addEventListener("click", function () { abrir(t); });
+    t.addEventListener("keydown", function (e) {
+      var d = (e.key === "ArrowDown" || e.key === "ArrowRight") ? 1 : (e.key === "ArrowUp" || e.key === "ArrowLeft") ? -1 : 0;
+      if (d) { e.preventDefault(); abrir(abas[(i + d + abas.length) % abas.length], true); }
+    });
+  });
+  var inicial = $("tab-" + (location.hash || "").replace("#", ""));
+  if (inicial) { abrir(inicial); }
+
+  // Campo "ou": quem foi digitado por último manda.
+  function par(idA, idB, recalc) {
+    var ultimo = idA;
+    $(idA).addEventListener("input", function () { ultimo = idA; $(idB).value = ""; recalc(); });
+    $(idB).addEventListener("input", function () { ultimo = idB; $(idA).value = ""; recalc(); });
+    return function () { return ultimo; };
+  }
+
+  // ── PT100 / CVD ───────────────────────────────────────────────────────
+  function lerPontos(texto) {
+    var linhas = texto.split(/\r?\n/), pts = [], i, p;
+    for (i = 0; i < linhas.length; i++) {
+      if (!linhas[i].trim()) { continue; }
+      p = linhas[i].trim().split(/\t|;|\s{2,}|\s(?=-?\d)/);
+      if (p.length < 2 || isNaN(num(p[0])) || isNaN(num(p[1]))) { throw new Error("Linha " + (i + 1) + " não tem temperatura e resistência: “" + linhas[i].trim() + "”."); }
+      pts.push({ t: num(p[0]), R: num(p[1]) });
+    }
+    return pts;
+  }
+  var cvdUlt = par("cvd-t", "cvd-r", cvd);
+  function cvdFonte() { return document.querySelector('input[name="cvd-src"]:checked').value; }
+  function tabelaCoef(id, titulo, nomes, valores, unidades) {
+    var lin = [], i;
+    for (i = 0; i < nomes.length; i++) { lin.push(unidades ? [nomes[i], sci(valores[i], 8), unidades[i]] : [nomes[i], sci(valores[i], 8)]); }
+    return tabela(id, titulo, unidades ? ["Coeficiente", "Valor", "Unidade"] : ["Coeficiente", "Valor"], lin);
+  }
+  function cvd() {
+    var out = $("cvd-out"), h = "", src = cvdFonte(), R0, A, B, Cc, aj = null, i;
+    $("cvd-pontos-box").hidden = src !== "cal";
+    ["cvd-a", "cvd-b", "cvd-c"].forEach(function (id) { $(id).readOnly = src !== "man"; });
+    try {
+      if (src === "cal") {
+        var fix = $("cvd-fixar").checked ? req("cvd-r0", "R0") : 0;
+        aj = C.cvdAjustar(lerPontos($("cvd-pontos").value), fix);
+        R0 = aj.R0; A = aj.A; B = aj.B; Cc = aj.C;
+        if (!fix) { $("cvd-r0").value = fmt(R0, 5); }
+        $("cvd-a").value = sci(A, 7); $("cvd-b").value = sci(B, 7); $("cvd-c").value = sci(Cc, 7);
+        h += tabelaCoef("cvd-coef", "Coeficientes calculados",
+          ["R0", "A", "B", "C"], [aj.R0, aj.A, aj.B, aj.C], ["Ω", "°C⁻¹", "°C⁻²", aj.ajustouC ? "°C⁻⁴" : "°C⁻⁴ (sem ponto abaixo de 0 °C)"]);
+        var lin = [];
+        for (i = 0; i < aj.residuos.length; i++) {
+          var r = aj.residuos[i];
+          lin.push([fmt(r.t, 3), fmt(r.R, 4), fmt(r.Rcalc, 4), fmt((r.R - r.Rcalc) * 1000, 2), fmt((r.tCalc - r.t) * 1000, 1)]);
+        }
+        h += tabela("cvd-res", "Resíduos do ajuste", ["t (°C)", "R medida (Ω)", "R ajustada (Ω)", "Resíduo (mΩ)", "Resíduo (mK)"], lin);
+      } else if (src === "iec") {
+        R0 = req("cvd-r0", "R0"); A = C.IEC.A; B = C.IEC.B; Cc = C.IEC.C;
+        $("cvd-a").value = "3,9083E-3"; $("cvd-b").value = "-5,775E-7"; $("cvd-c").value = "-4,183E-12";
+      } else {
+        R0 = req("cvd-r0", "R0"); A = req("cvd-a", "A"); B = req("cvd-b", "B"); Cc = num($("cvd-c").value) || 0;
+      }
+      if (cvdUlt() === "cvd-r" && $("cvd-r").value.trim()) {
+        var R = req("cvd-r", "a resistência"), t = C.cvdT(R, R0, A, B, Cc);
+        h += caixa(fmt(t, 4) + " °C", fmt(R, 4) + " Ω com R0 = " + fmt(R0, 4) + " Ω");
+      } else {
+        var tt = req("cvd-t", "a temperatura"), Rr = C.cvdR(tt, R0, A, B, Cc);
+        h += caixa(fmt(Rr, 4) + " Ω", fmt(tt, 3) + " °C com R0 = " + fmt(R0, 4) + " Ω");
+      }
+      var seq = sequencia(req("cvd-de", "o início da tabela"), req("cvd-ate", "o fim da tabela"), req("cvd-passo", "o passo"));
+      var lt = seq.map(function (t) { return [fmt(t, 2), fmt(C.cvdR(t, R0, A, B, Cc), 4)]; });
+      h += tabela("cvd-tab", "Tabela R × t", ["t (°C)", "R (Ω)"], lt);
+    } catch (e) { h = erro(e) + h; }
+    out.innerHTML = h;
+  }
+  $("cvd-tipo").addEventListener("change", function () { if (this.value) { $("cvd-r0").value = this.value; } cvd(); });
+  ["cvd-r0", "cvd-a", "cvd-b", "cvd-c", "cvd-pontos", "cvd-fixar", "cvd-de", "cvd-ate", "cvd-passo"].forEach(function (id) { $(id).addEventListener("input", cvd); });
+  Array.prototype.forEach.call(document.querySelectorAll('input[name="cvd-src"]'), function (r) { r.addEventListener("change", cvd); });
+
+  // ── SPRT / ITS-90 ─────────────────────────────────────────────────────
+  var ordemFaixas = ["4", "5", "11", "10", "9", "8", "7"];
+  ordemFaixas.forEach(function (k) {
+    var o = document.createElement("option"); o.value = k; o.textContent = "Subfaixa " + k + ": " + C.FAIXAS[k].nome; $("its-faixa").appendChild(o);
+  });
+  $("its-faixa").value = "8";
+  var exemploCoef = { "8": ["-1,2345E-4", "-2,1E-5"], "7": ["-1,5E-4", "2,1E-5", "-6,0E-6"] };
+  function montarIts() {
+    var f = C.FAIXAS[$("its-faixa").value], nomes = ["a", "b", "c"], h = "", i, ex = exemploCoef[$("its-faixa").value] || [];
+    for (i = 0; i < f.pontos.length; i++) {
+      h += '<div class="field"><label for="its-k' + i + '">' + nomes[i] + '</label><input id="its-k' + i + '" inputmode="decimal" value="' + (ex[i] || "") + '"></div>';
+    }
+    $("its-coef-box").innerHTML = h;
+    h = "";
+    for (i = 0; i < f.pontos.length; i++) {
+      var p = C.PONTOS_FIXOS[f.pontos[i]];
+      h += '<div class="field"><label for="its-p' + i + '">R no ' + p.nome.toLowerCase() + ', ' + fmt(p.t, 4) + ' °C (Ω)</label><input id="its-p' + i + '" inputmode="decimal"></div>';
+    }
+    $("its-pf-box").innerHTML = h;
+    Array.prototype.forEach.call(document.querySelectorAll("#its-coef-box input, #its-pf-box input"), function (el) { el.addEventListener("input", its); });
+  }
+  var itsUlt = par("its-r", "its-t", its);
+  function its() {
+    var out = $("its-out"), h = "", faixa = $("its-faixa").value, F = C.FAIXAS[faixa], src = document.querySelector('input[name="its-src"]:checked').value, coef = [], i, aj = null;
+    var nomes = ["a", "b", "c"];
+    $("its-cmp-box").hidden = src !== "cmp";
+    $("its-coef-box").hidden = src !== "coef";
+    $("its-pf-box").hidden = src !== "pf";
+    try {
+      var Rtpw = req("its-rtpw", "R(0,01 °C)");
+      if (src === "coef") {
+        for (i = 0; i < F.pontos.length; i++) { coef.push(req("its-k" + i, "o coeficiente " + nomes[i])); }
+      } else if (src === "pf") {
+        var W = {};
+        for (i = 0; i < F.pontos.length; i++) { W[F.pontos[i]] = req("its-p" + i, "a resistência no ponto fixo") / Rtpw; }
+        coef = C.itsCoeficientes(faixa, W);
+      } else {
+        aj = C.itsAjustar(faixa, Rtpw, lerPontos($("its-cmp").value));
+        coef = aj.coef;
+      }
+      if (src !== "coef") {
+        h += tabelaCoef("its-coef", "Coeficientes calculados · subfaixa " + faixa, nomes.slice(0, coef.length), coef);
+      } else {
+        h += kv([["Subfaixa", esc(F.nome)]]);
+      }
+      if (aj) {
+        var lin = aj.residuos.map(function (r) { return [fmt(r.t, 4), fmt(r.R, 5), fmt(r.W, 8), fmt(r.tCalc, 4), fmt((r.tCalc - r.t) * 1000, 2)]; });
+        h += tabela("its-res", "Resíduos do ajuste", ["t90 padrão (°C)", "R (Ω)", "W", "t90 calculada (°C)", "Resíduo (mK)"], lin);
+      }
+      if (itsUlt() === "its-t" && $("its-t").value.trim()) {
+        var t = req("its-t", "a temperatura"), Wt = C.itsWdeT(faixa, coef, t);
+        h += caixa(fmt(Wt * Rtpw, 5) + " Ω", "W = " + fmt(Wt, 8) + " · Wr = " + fmt(C.itsWr(t), 8));
+      } else {
+        var R = req("its-r", "a resistência"), Wm = R / Rtpw, tm = C.itsTdeW(faixa, coef, Wm);
+        h += caixa(fmt(tm, 4) + " °C", "W = " + fmt(Wm, 8) + " · ΔW = " + sci(C.itsDesvio(faixa, coef, Wm), 5) + " · T90 = " + fmt(tm + 273.15, 4) + " K");
+        if (tm < F.min - 0.5 || tm > F.max + 0.5) { h += '<p class="warn-box">Essa temperatura está fora da subfaixa escolhida (' + F.nome + '). O resultado é uma extrapolação.</p>'; }
+      }
+      var seq = sequencia(req("its-de", "o início da tabela"), req("its-ate", "o fim da tabela"), req("its-passo", "o passo"));
+      var lt = seq.map(function (t) { var w = C.itsWdeT(faixa, coef, t); return [fmt(t, 3), fmt(C.itsWr(t), 8), fmt(w, 8), fmt(w * Rtpw, 5)]; });
+      h += tabela("its-tab", "Tabela do SPRT", ["t90 (°C)", "Wr", "W", "R (Ω)"], lt);
+    } catch (e) { h = erro(e) + h; }
+    out.innerHTML = h;
+  }
+  $("its-faixa").addEventListener("change", function () { montarIts(); its(); });
+  ["its-rtpw", "its-cmp", "its-de", "its-ate", "its-passo"].forEach(function (id) { $(id).addEventListener("input", its); });
+  Array.prototype.forEach.call(document.querySelectorAll('input[name="its-src"]'), function (r) { r.addEventListener("change", its); });
+
+  // ── Termopar ──────────────────────────────────────────────────────────
+  var tcUlt = par("tc-mv", "tc-t", tc);
+  function tc() {
+    var out = $("tc-out"), h = "", tipo = $("tc-tipo").value, f = C.tcFaixa(tipo), cal = document.querySelector('input[name="tc-src"]:checked').value === "cal";
+    var d = [0], aj = null, i;
+    $("tc-faixa").textContent = "Faixa do tipo " + tipo + ": " + fmt(f.min, 0) + " a " + fmt(f.max, 0) + " °C";
+    $("tc-cal-box").hidden = !cal;
+    try {
+      var tj = req("tc-junta", "a junta de referência");
+      if (cal) {
+        aj = C.tcAjustar(tipo, lerPontos($("tc-pontos").value).map(function (p) { return { t: p.t, E: p.R }; }), +$("tc-grau").value, tj);
+        d = aj.d;
+        var nomes = [], vals = [], uns = [];
+        for (i = 1; i < d.length; i++) { nomes.push("d" + i); vals.push(d[i]); uns.push(i === 1 ? "mV/°C" : "mV/°C" + ["", "", "²", "³", "⁴"][i]); }
+        h += tabelaCoef("tc-coef", "Função de desvio · tipo " + tipo, nomes, vals, uns);
+        var lin = aj.residuos.map(function (r) { return [fmt(r.t, 3), fmt(r.E, 4), fmt(r.desvio * 1000, 1), fmt(r.tCalc, 3), fmt((r.tCalc - r.t) * 1000, 0)]; });
+        h += tabela("tc-res", "Resíduos do ajuste", ["t padrão (°C)", "E medida (mV)", "ΔE ajustado (µV)", "t calculada (°C)", "Resíduo (mK)"], lin);
+      }
+      if (tcUlt() === "tc-t" && $("tc-t").value.trim()) {
+        var t = req("tc-t", "a temperatura"), e = C.tcEmfCal(tipo, d, t) - C.tcEmfCal(tipo, d, tj);
+        h += caixa(fmt(e, 4) + " mV", "tipo " + tipo + (cal ? " calibrado" : "") + " a " + fmt(t, 2) + " °C, junta a " + fmt(tj, 2) + " °C");
+      } else {
+        var mv = req("tc-mv", "a f.e.m."), tt = C.tcTempCal(tipo, d, mv, tj);
+        h += caixa(fmt(tt, 3) + " °C", "tipo " + tipo + (cal ? " calibrado" : "") + ", " + fmt(mv, 4) + " mV com junta a " + fmt(tj, 2) + " °C");
+      }
+      var seq = sequencia(req("tc-de", "o início da tabela"), req("tc-ate", "o fim da tabela"), req("tc-passo", "o passo"));
+      var lt, cab;
+      if (cal) {
+        lt = seq.map(function (t) { return [fmt(t, 1), fmt(C.tcEmf(tipo, t), 4), fmt(C.tcDesvio(d, t) * 1000, 1), fmt(C.tcEmfCal(tipo, d, t), 4)]; });
+        cab = ["t (°C)", "E NIST (mV)", "ΔE (µV)", "E calibrado (mV)"];
+      } else {
+        var ej = C.tcEmf(tipo, tj);
+        lt = seq.map(function (t) { return [fmt(t, 1), fmt(C.tcEmf(tipo, t), 3), fmt(C.tcEmf(tipo, t) - ej, 3)]; });
+        cab = ["t (°C)", "E junta 0 °C (mV)", "E junta " + fmt(tj, 1) + " °C (mV)"];
+      }
+      h += tabela("tc-tab", "Tabela do tipo " + tipo + (cal ? " calibrado (junta a 0 °C)" : ""), cab, lt);
+    } catch (e2) { h = erro(e2) + h; }
+    out.innerHTML = h;
+  }
+  ["tc-tipo", "tc-junta", "tc-pontos", "tc-grau", "tc-de", "tc-ate", "tc-passo"].forEach(function (id) { $(id).addEventListener("input", tc); });
+  Array.prototype.forEach.call(document.querySelectorAll('input[name="tc-src"]'), function (r) { r.addEventListener("change", tc); });
+
+  // ── Transmissor ───────────────────────────────────────────────────────
+  var txUlt = par("tx-x", "tx-y", tx);
+  function tx() {
+    var out = $("tx-out"), h = "";
+    try {
+      var vmin = req("tx-min", "o início da faixa"), vmax = req("tx-max", "o fim da faixa"), un = esc($("tx-un").value || "");
+      var s = $("tx-sinal").value.split(","), smin = +s[0], smax = +s[1], su = s[2];
+      if (txUlt() === "tx-y" && $("tx-y").value.trim()) {
+        var y = req("tx-y", "o sinal"), x = C.escala(y, smin, smax, vmin, vmax);
+        h += caixa(fmt(x, 3) + " " + un, fmt(y, 3) + " " + su + " · " + fmt((y - smin) / (smax - smin) * 100, 2) + " % da faixa");
+      } else {
+        var xv = req("tx-x", "o valor aplicado"), yv = C.escala(xv, vmin, vmax, smin, smax);
+        h += caixa(fmt(yv, 3) + " " + su, fmt(xv, 3) + " " + un + " · " + fmt((xv - vmin) / (vmax - vmin) * 100, 2) + " % da faixa");
+      }
+      var lidos = $("tx-lido").value.trim() ? $("tx-lido").value.split(";").map(num) : [];
+      var lin = [0, 25, 50, 75, 100].map(function (p, i) {
+        var v = vmin + p / 100 * (vmax - vmin), esp = smin + p / 100 * (smax - smin), row = [fmt(p, 0), fmt(v, 3), fmt(esp, 3)];
+        if (lidos.length) {
+          var l = lidos[i];
+          if (isNaN(l)) { row.push("—", "—", "—", ""); }
+          else {
+            var errS = l - esp, pct = errS / (smax - smin) * 100;
+            row.push(fmt(l, 3), fmt(errS, 3), fmt(pct, 3), fmt(errS / (smax - smin) * (vmax - vmin), 3));
+          }
+        }
+        return row;
+      });
+      var cab = ["%", "Valor (" + un + ")", "Sinal esperado (" + su + ")"];
+      if (lidos.length) { cab.push("Lido (" + su + ")", "Erro (" + su + ")", "Erro (% span)", "Erro (" + un + ")"); }
+      h += tabela("tx-tab", "Pontos de verificação", cab, lin);
+    } catch (e) { h = erro(e) + h; }
+    out.innerHTML = h;
+  }
+  ["tx-min", "tx-max", "tx-un", "tx-sinal", "tx-lido"].forEach(function (id) { $(id).addEventListener("input", tx); });
+
+  function chip(txt) {
+    var c = /^(Conforme|Satisfatório)$/.test(txt) ? "st-ok" : (/condicional|Questionável/.test(txt) ? "st-warn" : "st-bad");
+    return '<span class="st ' + c + '">' + esc(txt) + '</span>';
+  }
+  function lerLinhas(texto, ncol, nomeCols) {
+    var linhas = texto.split(/\r?\n/), out = [], i, p, j, v;
+    for (i = 0; i < linhas.length; i++) {
+      if (!linhas[i].trim()) { continue; }
+      p = linhas[i].trim().split(/\t|;|\s{2,}|\s(?=-?\d)/);
+      if (p.length < ncol) { throw new Error("Linha " + (i + 1) + " precisa de " + ncol + " valores (" + nomeCols + "): “" + linhas[i].trim() + "”."); }
+      v = [];
+      for (j = 0; j < ncol; j++) {
+        v.push(num(p[j]));
+        if (isNaN(v[j])) { throw new Error("Linha " + (i + 1) + ": “" + p[j] + "” não é um número."); }
+      }
+      out.push(v);
+    }
+    if (!out.length) { throw new Error("Cole pelo menos uma linha."); }
+    return out;
+  }
+
+  // ── Tolerância de classe ──────────────────────────────────────────────
+  function tol() {
+    var out = $("tol-out"), h = "", sensor = $("tol-sensor").value, rtd = sensor === "RTD", classes, i;
+    $("tol-r0-box").hidden = !rtd;
+    try {
+      var t = req("tol-t", "a temperatura");
+      classes = rtd ? ["AA", "A", "B", "C"] : C.classesTC(sensor);
+      var pares = [];
+      for (i = 0; i < classes.length; i++) {
+        if (rtd) {
+          var r = C.tolRTD(classes[i], t), R0 = req("tol-r0", "R0");
+          var dRdt = (C.cvdR(t + 0.01, R0, C.IEC.A, C.IEC.B, C.IEC.C) - C.cvdR(t - 0.01, R0, C.IEC.A, C.IEC.B, C.IEC.C)) / 0.02;
+          var fio = t >= r.fio[0] && t <= r.fio[1], filme = t >= r.filme[0] && t <= r.filme[1];
+          var val = "±" + fmt(r.tol, 3) + " °C  (±" + fmt(r.tol * dRdt, 3) + " Ω)";
+          if (!fio && !filme) { val += " · fora da faixa da classe"; }
+          else if (!filme) { val += " · só sensor de fio"; }
+          else if (!fio) { val += " · só sensor de filme"; }
+          pares.push(["Classe " + classes[i], val]);
+        } else {
+          var v = C.tolTC(sensor, classes[i], t);
+          pares.push([C.nomeClasseTC(classes[i]), v === null ? "não cobre " + fmt(t, 1) + " °C" : "±" + fmt(v, 2) + " °C"]);
+        }
+      }
+      h += '<div class="result" role="status"><span class="sub">Tolerância a ' + fmt(t, 2) + ' °C · ' + (rtd ? "IEC 60751" : "tipo " + sensor + ", IEC 60584-1 e ASTM E230") + '</span>' + kv(pares) + '</div>';
+      var seq = sequencia(req("tol-de", "o início da tabela"), req("tol-ate", "o fim da tabela"), req("tol-passo", "o passo"));
+      var lin = seq.map(function (tt) {
+        return [fmt(tt, 1)].concat(classes.map(function (c) {
+          var v = rtd ? C.tolRTD(c, tt) : C.tolTC(sensor, c, tt);
+          if (rtd) { return (tt >= Math.min(v.fio[0], v.filme[0]) && tt <= Math.max(v.fio[1], v.filme[1])) ? fmt(v.tol, 3) : "—"; }
+          return v === null ? "—" : fmt(v, 2);
+        }));
+      });
+      h += tabela("tol-tab", "Tolerância (±°C) por classe", ["t (°C)"].concat(classes.map(function (c) { return rtd ? "Classe " + c : C.nomeClasseTC(c); })), lin);
+    } catch (e) { h = erro(e) + h; }
+    out.innerHTML = h;
+  }
+  ["tol-sensor", "tol-t", "tol-r0", "tol-de", "tol-ate", "tol-passo"].forEach(function (id) { $(id).addEventListener("input", tol); });
+
+  // ── Regra de decisão ──────────────────────────────────────────────────
+  var DEC_HINT = {
+    naobinaria: "w = U. Perto do limite o resultado sai como condicional.",
+    binaria: "w = U. Só é conforme com pelo menos U de folga até o limite.",
+    simples: "w = 0. A incerteza não entra na decisão (risco compartilhado)."
+  };
+  function barra(x, U, li, ls, w, dmin, dmax) {
+    var W = 180, H = 20, pad = 4;
+    function X(v) { return pad + (v - dmin) / (dmax - dmin) * (W - 2 * pad); }
+    var temLi = !isNaN(li), temLs = !isNaN(ls), a = temLi ? li : dmin, b = temLs ? ls : dmax, g = "";
+    g += '<rect class="zona-guarda" x="' + X(a) + '" y="3" width="' + Math.max(0, X(b) - X(a)) + '" height="14"/>';
+    var aa = temLi ? li + w : dmin, bb = temLs ? ls - w : dmax;
+    if (bb > aa) { g += '<rect class="zona-ok" x="' + X(aa) + '" y="3" width="' + (X(bb) - X(aa)) + '" height="14"/>'; }
+    if (temLi) { g += '<line class="lim" x1="' + X(li) + '" x2="' + X(li) + '" y1="1" y2="19"/>'; }
+    if (temLs) { g += '<line class="lim" x1="' + X(ls) + '" x2="' + X(ls) + '" y1="1" y2="19"/>'; }
+    g += '<line class="int" x1="' + X(x - U) + '" x2="' + X(x + U) + '" y1="10" y2="10"/>';
+    g += '<line class="int" x1="' + X(x - U) + '" x2="' + X(x - U) + '" y1="6" y2="14"/><line class="int" x1="' + X(x + U) + '" x2="' + X(x + U) + '" y1="6" y2="14"/>';
+    g += '<circle class="pt" cx="' + X(x) + '" cy="10" r="3"/>';
+    return '<svg class="decbar" viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="' + fmt(x, 3) + ' ± ' + fmt(U, 3) + '">' + g + '</svg>';
+  }
+  function dec() {
+    var out = $("dec-out"), h = "", modo = document.querySelector('input[name="dec-modo"]:checked').value;
+    $("dec-hint").textContent = DEC_HINT[modo];
+    try {
+      var li = num($("dec-li").value), ls = num($("dec-ls").value);
+      var pts = lerLinhas($("dec-pts").value, 2, "valor e U"), i;
+      var lo = Infinity, hi = -Infinity;
+      for (i = 0; i < pts.length; i++) { lo = Math.min(lo, pts[i][0] - Math.abs(pts[i][1])); hi = Math.max(hi, pts[i][0] + Math.abs(pts[i][1])); }
+      if (!isNaN(li)) { lo = Math.min(lo, li); hi = Math.max(hi, li); }
+      if (!isNaN(ls)) { lo = Math.min(lo, ls); hi = Math.max(hi, ls); }
+      var folga = (hi - lo) * 0.08 || 1; lo -= folga; hi += folga;
+      var cont = {}, lin = [];
+      for (i = 0; i < pts.length; i++) {
+        var x = pts[i][0], U = Math.abs(pts[i][1]), r = C.decidir(x, U, isNaN(li) ? null : li, isNaN(ls) ? null : ls, modo);
+        cont[r.decisao] = (cont[r.decisao] || 0) + 1;
+        lin.push({ txt: [String(i + 1), fmt(x, 3), fmt(U, 3), "[" + fmt(x - U, 3) + " ; " + fmt(x + U, 3) + "]", r.decisao],
+                   html: [String(i + 1), fmt(x, 3), fmt(U, 3), "[" + fmt(x - U, 3) + " ; " + fmt(x + U, 3) + "]", chip(r.decisao), barra(x, U, li, ls, r.w, lo, hi)] });
+      }
+      var resumo = Object.keys(cont).map(function (k) { return cont[k] + " " + k.toLowerCase(); }).join(" · ");
+      h += caixa(pts.length + " ponto(s)", resumo);
+      tabelas["dec-tab"] = { cab: ["#", "Valor", "U", "Intervalo", "Decisão"], linhas: lin.map(function (l) { return l.txt; }) };
+      var t = '<div class="tbl-bar"><h3>Decisão por ponto</h3><span><span class="msg" id="msg-dec-tab" aria-live="polite"></span> <button type="button" class="btn btn-ghost btn-sm" data-copiar="dec-tab">Copiar para o Excel</button></span></div>';
+      t += '<div class="tbl-wrap"><table class="tbl"><thead><tr><th scope="col">#</th><th scope="col">Valor</th><th scope="col">U</th><th scope="col">Intervalo</th><th scope="col">Decisão</th><th scope="col" class="esq">Valor ± U frente aos limites</th></tr></thead><tbody>';
+      lin.forEach(function (l) { t += "<tr>" + l.html.map(function (c, k) { return "<td" + (k >= 4 ? ' class="esq"' : "") + ">" + c + "</td>"; }).join("") + "</tr>"; });
+      h += t + "</tbody></table></div>";
+      h += '<p class="note">Na barra: traços pretos são os limites, verde é onde o valor dá conforme e amarelo é a banda de guarda. O ponto é o valor medido e o traço azul é ± U.</p>';
+    } catch (e) { h = erro(e) + h; }
+    out.innerHTML = h;
+  }
+  ["dec-li", "dec-ls", "dec-pts"].forEach(function (id) { $(id).addEventListener("input", dec); });
+  Array.prototype.forEach.call(document.querySelectorAll('input[name="dec-modo"]'), function (r) { r.addEventListener("change", dec); });
+
+  // ── Incerteza da especificação ────────────────────────────────────────
+  var espUltima = null;
+  function esp() {
+    var out = $("esp-out"), h = "", dist = $("esp-dist").value;
+    $("esp-k-box").hidden = dist !== "norm";
+    try {
+      var leituras = $("esp-leit").value.split(";").map(num).filter(function (v) { return !isNaN(v); });
+      if (!leituras.length) { throw new Error("Informe pelo menos uma leitura."); }
+      var un = esc($("esp-un").value || "");
+      var base = {
+        faixa: num($("esp-faixa").value) || 0, pctLeitura: num($("esp-pl").value) || 0, pctFaixa: num($("esp-pf").value) || 0,
+        digitos: num($("esp-dig").value) || 0, resolucao: num($("esp-res").value) || 0, fixo: num($("esp-fixo").value) || 0
+      };
+      var div = dist === "ret" ? Math.sqrt(3) : (dist === "tri" ? Math.sqrt(6) : req("esp-k", "o k da especificação"));
+      var divTxt = dist === "ret" ? "√3" : (dist === "tri" ? "√6" : fmt(div, 2));
+      var incRes = $("esp-incres").checked, uRes = base.resolucao / (2 * Math.sqrt(3));
+      var linhas = leituras.map(function (l) {
+        var e = { leitura: l }; for (var k in base) { e[k] = base[k]; }
+        var a = C.especLimite(e), u = a / div, ut = incRes ? Math.sqrt(u * u + uRes * uRes) : u;
+        return { l: l, a: a, u: ut, partes: [Math.abs(l) * base.pctLeitura / 100, base.faixa * base.pctFaixa / 100, base.digitos * base.resolucao, base.fixo] };
+      });
+      var p0 = linhas[0];
+      espUltima = { u: p0.u, l: p0.l, un: $("esp-un").value || "" };
+      h += caixa("u = " + sig(p0.u) + " " + un, "leitura " + sig(p0.l) + " " + un + " · limite ±" + sig(p0.a) + " " + un + " ÷ " + divTxt + (incRes ? " · com resolução" : ""));
+      h += kv([
+        ["% da leitura", "±" + sig(p0.partes[0]) + " " + un], ["% da faixa", "±" + sig(p0.partes[1]) + " " + un],
+        ["dígitos", "±" + sig(p0.partes[2]) + " " + un], ["fixo", "±" + sig(p0.partes[3]) + " " + un],
+        ["limite a", "±" + sig(p0.a) + " " + un]
+      ].concat(incRes ? [["u resolução", sig(uRes) + " " + un]] : []));
+      h += '<div class="cta"><span>Usar essa incerteza num orçamento completo?</span><button type="button" class="btn btn-primary btn-sm" id="esp-levar">Adicionar ao fator k · νeff</button></div>';
+      if (linhas.length > 1) {
+        h += tabela("esp-tab", "Por leitura", ["Leitura (" + un + ")", "Limite ± (" + un + ")", "u (" + un + ")", "u relativa (%)"],
+          linhas.map(function (r) { return [sig(r.l), sig(r.a), sig(r.u), r.l ? fmt(r.u / Math.abs(r.l) * 100, 4) : "—"]; }));
+      }
+    } catch (e) { h = erro(e) + h; espUltima = null; }
+    out.innerHTML = h;
+  }
+  ["esp-leit", "esp-un", "esp-faixa", "esp-res", "esp-pl", "esp-pf", "esp-dig", "esp-fixo", "esp-dist", "esp-k", "esp-incres"].forEach(function (id) { $(id).addEventListener("input", esp); });
+  document.addEventListener("click", function (ev) {
+    if (!ev.target.closest("#esp-levar") || !espUltima) { return; }
+    var linha = "Especificação do instrumento (" + sig(espUltima.l) + " " + espUltima.un + "); " + sig(espUltima.u);
+    var ta = $("k-pts");
+    ta.value = ta.value.replace(/\s+$/, "") + (ta.value.trim() ? "\n" : "") + linha;
+    abrir($("tab-k"), true);
+    kcalc();
+  });
+
+  // ── Fator k / νeff ────────────────────────────────────────────────────
+  function lerContrib(texto) {
+    var linhas = texto.split(/\r?\n/), out = [], i, p, nome, u, nu;
+    for (i = 0; i < linhas.length; i++) {
+      if (!linhas[i].trim()) { continue; }
+      p = linhas[i].split(/\t|;/).map(function (x) { return x.trim(); });
+      if (p.length && !isNaN(num(p[0]))) { p.unshift("Fonte " + (out.length + 1)); }
+      nome = p[0]; u = num(p[1]);
+      if (isNaN(u)) { throw new Error("Linha " + (i + 1) + ": falta a incerteza padrão u. Formato: fonte; u; graus de liberdade."); }
+      nu = (p[2] || "").replace(/\s/g, "");
+      nu = (nu === "" || /^(∞|inf|infinito)$/i.test(nu)) ? Infinity : num(nu);
+      if (isNaN(nu)) { throw new Error("Linha " + (i + 1) + ": graus de liberdade “" + p[2] + "” não é um número."); }
+      out.push({ nome: nome, u: u, nu: nu });
+    }
+    return out;
+  }
+  function kcalc() {
+    var out = $("k-out"), h = "", pp = document.querySelector('input[name="k-p"]:checked').value === "95" ? 0.95 : C.P_K2;
+    try {
+      var cs = lerContrib($("k-pts").value), o = C.orcamento(cs, pp), un = esc($("k-un").value || "");
+      var ar = C.arredondarU(o.U), x = num($("k-x").value);
+      var nuTxt = isFinite(o.nueff) ? fmt(o.nueff, 1) + (o.nuUsado !== o.nueff ? " → " + o.nuUsado : "") : "∞";
+      h += caixa("U = " + fmt(ar.U, ar.casas) + " " + un,
+        "k = " + fmt(o.k, 2) + " · νeff = " + nuTxt + " · uc = " + sig(o.uc) + " " + un + " · p = " + (pp === 0.95 ? "95 %" : "95,45 %"));
+      if (!isNaN(x)) {
+        h += '<div class="result"><span class="sub">Resultado para o certificado</span><span class="big">' + fmt(x, ar.casas) + " ± " + fmt(ar.U, ar.casas) + " " + un + '</span><span class="sub">U expandida com k = ' + fmt(o.k, 2) + ', probabilidade de abrangência de aproximadamente 95 %</span></div>';
+      }
+      var soma2 = o.uc * o.uc, maior = 0;
+      cs.forEach(function (c) { maior = Math.max(maior, c.u * c.u / soma2); });
+      tabelas["k-tab"] = { cab: ["Fonte", "u", "ν", "u²", "Contribuição (%)"], linhas: cs.map(function (c) {
+        return [c.nome, sig(c.u), isFinite(c.nu) ? String(c.nu) : "∞", sci(c.u * c.u, 4), fmt(c.u * c.u / soma2 * 100, 1)];
+      }) };
+      var t = '<div class="tbl-bar"><h3>Orçamento de incerteza</h3><span><span class="msg" id="msg-k-tab" aria-live="polite"></span> <button type="button" class="btn btn-ghost btn-sm" data-copiar="k-tab">Copiar para o Excel</button></span></div>';
+      t += '<div class="tbl-wrap"><table class="tbl"><thead><tr><th scope="col" class="esq">Fonte</th><th scope="col">u</th><th scope="col">ν</th><th scope="col">Contribuição</th></tr></thead><tbody>';
+      cs.forEach(function (c) {
+        var pct = c.u * c.u / soma2;
+        t += '<tr><td class="esq">' + esc(c.nome) + '</td><td>' + sig(c.u) + '</td><td>' + (isFinite(c.nu) ? c.nu : "∞") + '</td><td><span class="contrib"><i style="width:' + Math.round(pct / maior * 90) + 'px"></i>' + fmt(pct * 100, 1) + ' %</span></td></tr>';
+      });
+      h += t + '</tbody></table></div>';
+      h += '<div class="cta"><span>No FQCORE, o orçamento fica salvo junto de cada certificado, com modelos por grandeza.</span><a class="btn btn-ghost btn-sm" href="produto-17025.html">Conhecer o Motor GUM</a></div>';
+    } catch (e) { h = erro(e) + h; }
+    out.innerHTML = h;
+  }
+  ["k-pts", "k-x", "k-un"].forEach(function (id) { $(id).addEventListener("input", kcalc); });
+  Array.prototype.forEach.call(document.querySelectorAll('input[name="k-p"]'), function (r) { r.addEventListener("change", kcalc); });
+
+  // ── En / z / zeta ─────────────────────────────────────────────────────
+  var EP = {
+    en: { label: "Resultados: valor do laboratório, U do laboratório, valor de referência, U da referência", cols: 4,
+          nomes: "x, U, X, Uref", hint: "Incertezas expandidas (k = 2). Uma linha por ponto.",
+          ex: "100,02\t0,05\t100,00\t0,03\n200,08\t0,06\t200,01\t0,04\n300,05\t0,08\t300,02\t0,05\n399,85\t0,10\t400,00\t0,06" },
+    z: { label: "Resultados: valor do laboratório, valor designado, desvio padrão para proficiência", cols: 3,
+         nomes: "x, X, σpt", hint: "Os três valores vêm do relatório do provedor de proficiência.",
+         ex: "10,12\t10,00\t0,08\n9,95\t10,00\t0,08\n10,21\t10,00\t0,08\n9,70\t10,00\t0,08" },
+    zeta: { label: "Resultados: valor, u do valor, valor designado, u do valor designado", cols: 4,
+            nomes: "x, u(x), X, u(X)", hint: "Incertezas padrão (k = 1). Uma linha por ponto.",
+            ex: "5,30\t0,15\t5,00\t0,10\n4,92\t0,15\t5,00\t0,10\n5,61\t0,12\t5,00\t0,10" }
+  };
+  var epAnterior = "en";
+  function epModo() { return document.querySelector('input[name="ep-modo"]:checked').value; }
+  function epTrocar() {
+    var m = epModo();
+    // Troca o exemplo só se o usuário não tinha digitado dados próprios.
+    if (!$("ep-pts").value.trim() || $("ep-pts").value === EP[epAnterior].ex) { $("ep-pts").value = EP[m].ex; }
+    epAnterior = m;
+    $("ep-label").textContent = EP[m].label;
+    $("ep-hint").textContent = EP[m].hint;
+    ep();
+  }
+  function ep() {
+    var out = $("ep-out"), h = "", m = epModo(), cfg = EP[m];
+    try {
+      var pts = lerLinhas($("ep-pts").value, cfg.cols, cfg.nomes), cont = {}, linT = [], linH = [];
+      pts.forEach(function (p, i) {
+        var v, av;
+        if (m === "en") { v = C.en(p[0], p[1], p[2], p[3]); av = C.avaliarEn(v); }
+        else if (m === "z") { v = C.escoreZ(p[0], p[1], p[2]); av = C.avaliarZ(v); }
+        else { v = C.zeta(p[0], p[1], p[2], p[3]); av = C.avaliarZ(v); }
+        cont[av] = (cont[av] || 0) + 1;
+        var base = [String(i + 1)].concat(p.map(function (x) { return fmt(x, 4).replace(/0{1,2}$/, ""); }), [fmt(v, 2)]);
+        linT.push(base.concat([av]));
+        linH.push(base.concat([chip(av)]));
+      });
+      var nome = m === "en" ? "En" : (m === "z" ? "z" : "ζ");
+      h += caixa(pts.length + " resultado(s)", Object.keys(cont).map(function (k) { return cont[k] + " " + k.toLowerCase(); }).join(" · "));
+      var cab = ["#"].concat(cfg.nomes.split(", "), [nome, "Avaliação"]);
+      tabelas["ep-tab"] = { cab: cab, linhas: linT };
+      var t = '<div class="tbl-bar"><h3>Avaliação por resultado</h3><span><span class="msg" id="msg-ep-tab" aria-live="polite"></span> <button type="button" class="btn btn-ghost btn-sm" data-copiar="ep-tab">Copiar para o Excel</button></span></div>';
+      t += '<div class="tbl-wrap"><table class="tbl"><thead><tr>' + cab.map(function (c) { return '<th scope="col">' + esc(c) + '</th>'; }).join("") + '</tr></thead><tbody>';
+      linH.forEach(function (l) { t += "<tr>" + l.map(function (c) { return "<td>" + c + "</td>"; }).join("") + "</tr>"; });
+      h += t + "</tbody></table></div>";
+    } catch (e) { h = erro(e) + h; }
+    out.innerHTML = h;
+  }
+  $("ep-pts").addEventListener("input", ep);
+  Array.prototype.forEach.call(document.querySelectorAll('input[name="ep-modo"]'), function (r) { r.addEventListener("change", epTrocar); });
+
+  // ── Unidades ──────────────────────────────────────────────────────────
+  var grandezas = ["Temperatura"].concat(Object.keys(C.UNIDADES));
+  grandezas.forEach(function (g) { var o = document.createElement("option"); o.textContent = g; $("un-g").appendChild(o); });
+  $("un-g").value = "Pressão";
+  function unidadesDe(g) { return g === "Temperatura" ? ["°C", "K", "°F"] : C.UNIDADES[g].u.map(function (u) { return u[0]; }); }
+  function montarUn() {
+    var us = unidadesDe($("un-g").value);
+    $("un-de").innerHTML = us.map(function (u) { return "<option>" + esc(u) + "</option>"; }).join("");
+    if ($("un-g").value === "Pressão") { $("un-de").value = "bar"; }
+  }
+  function sig(v) {
+    if (v === 0) { return "0"; }
+    var a = Math.abs(v);
+    if (a >= 1e-3 && a < 1e7) { return fmt(v, Math.max(0, Math.min(10, 6 - Math.floor(Math.log(a) / Math.LN10)))); }
+    return sci(v, 7);
+  }
+  function un() {
+    var out = $("un-out"), h = "", g = $("un-g").value;
+    try {
+      var v = req("un-v", "o valor"), de = $("un-de").value;
+      var lin = unidadesDe(g).map(function (u) {
+        var r = g === "Temperatura" ? C.converterTemp(v, de, u) : C.converter(g, v, de, u);
+        return [esc(u), sig(r)];
+      });
+      h += tabela("un-tab", fmt(v, 6).replace(/0+$/, "").replace(/,$/, "") + " " + esc(de) + " equivale a", ["Unidade", "Valor"], lin);
+    } catch (e) { h = erro(e); }
+    out.innerHTML = h;
+  }
+  $("un-g").addEventListener("change", function () { montarUn(); un(); });
+  ["un-v", "un-de"].forEach(function (id) { $(id).addEventListener("input", un); });
+
+  // Exemplos: gerados a partir de coeficientes típicos e arredondados como
+  // um técnico anotaria, pra que o ajuste mostre resíduos realistas.
+  (function () {
+    var Rtpw = 25.5432, k = [-1.2345e-4, -2.1e-5], ruido = [0.00003, -0.00002, 0.00001, -0.00003, 0.00002];
+    $("its-cmp").value = [50, 100, 150, 250, 400].map(function (t, i) {
+      return fmt(t + i * 0.0013, 4) + "\t" + fmt(C.itsWdeT("8", k, t + i * 0.0013) * Rtpw + ruido[i], 5);
+    }).join("\n");
+    var d = [0, 1.2e-4, -2.1e-7], rt = [0.002, -0.001, 0.0015, -0.002, 0.001, 0];
+    $("tc-pontos").value = [100, 200, 300, 400, 500, 600].map(function (t, i) {
+      return fmt(t + 0.03 * i, 2) + "\t" + fmt(C.tcEmfCal("K", d, t + 0.03 * i) + rt[i], 3);
+    }).join("\n");
+  })();
+  montarIts(); montarUn();
+  epTrocar();
+  cvd(); its(); tc(); tol(); dec(); esp(); kcalc(); tx(); un();
+})();
+</script>
+</body>
+</html>

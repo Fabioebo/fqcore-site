@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Autoavaliação ISO/IEC 17025 · FQCORE</title>
+<meta name="description" content="Autoavaliação gratuita pela ISO/IEC 17025:2017, com 34 perguntas organizadas por cláusula, nota por seção e a lista dos pontos que precisam de atenção.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Condensed:wght@600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="site.css">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="theme-color" content="#13294B">
+<link rel="canonical" href="https://fqcore.com.br/autoavaliacao.html">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:site_name" content="FQCORE">
+<meta property="og:title" content="Autoavaliação ISO/IEC 17025 · FQCORE">
+<meta property="og:description" content="Autoavaliação gratuita pela ISO/IEC 17025:2017, com 34 perguntas organizadas por cláusula, nota por seção e a lista dos pontos que precisam de atenção.">
+<meta property="og:url" content="https://fqcore.com.br/autoavaliacao.html">
+<meta property="og:image" content="https://fqcore.com.br/og-fqcore.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+<body>
+
+<header class="titlebar">
+  <div class="wrap">
+    <a href="index.html" class="marca" aria-label="FQCORE, página inicial"><img src="logo-fqcore-claro.png" alt="FQCORE" width="155" height="22"></a>
+    <nav class="topnav" aria-label="Principal">
+      <details class="dd"><summary>Produtos</summary><div class="dd-painel dd-produtos"><a href="produto-17025.html"><b>FQCORE 17025</b><span>Laboratórios de calibração e ensaio</span></a><a href="produto-9001.html"><b>FQCORE 9001</b><span>Sistema de gestão da qualidade</span></a><a href="produto-equipamentos.html"><b>FQCORE Equipamentos</b><span>Instrumentos e calibrações</span></a><a href="thermolog.html"><b>ThermoLog</b><span>Monitoramento ambiental</span></a></div></details>
+      <details class="dd ativo"><summary>Recursos</summary><div class="dd-painel"><a href="duvidas.html"><b>Artigos</b><span>Metrologia, ISO/IEC 17025 e ISO 9001</span></a><a href="ferramentas.html"><b>Calculadoras</b><span>Temperatura, incerteza e conversões</span></a><a href="autoavaliacao.html" aria-current="page"><b>Autoavaliação ISO/IEC 17025</b><span>34 perguntas por cláusula</span></a><a href="autoavaliacao-9001.html"><b>Autoavaliação ISO 9001</b><span>32 perguntas por cláusula</span></a></div></details>
+      <a href="index.html#sobre">Sobre</a>
+      <a href="index.html#contato">Contato</a>
+    </nav>
+    <div class="acoes">
+      <a href="https://app.fqcore.com.br/login" class="entrar">Entrar</a>
+      <a href="index.html#contato" class="btn btn-primary">Agendar conversa</a>
+    </div>
+    <details class="menu-mob"><summary aria-label="Abrir menu">Menu</summary>
+      <div class="mob-painel">
+        <span class="label">Produtos</span><a href="produto-17025.html">FQCORE 17025</a><a href="produto-9001.html">FQCORE 9001</a><a href="produto-equipamentos.html">FQCORE Equipamentos</a><a href="thermolog.html">ThermoLog</a>
+        <span class="label">Recursos</span><a href="duvidas.html">Artigos</a><a href="ferramentas.html">Calculadoras</a><a href="autoavaliacao.html" aria-current="page">Autoavaliação ISO/IEC 17025</a><a href="autoavaliacao-9001.html">Autoavaliação ISO 9001</a>
+        <span class="label">Empresa</span><a href="index.html#sobre">Sobre</a><a href="index.html#contato">Contato</a><a href="https://app.fqcore.com.br/login">Entrar no sistema</a>
+      </div>
+    </details>
+  </div>
+</header>
+<script src="site.js" defer></script>
+
+<main class="wrap av-wrap">
+  <div class="av-intro">
+    <nav class="av-normas" aria-label="Escolha a norma"><a href="autoavaliacao.html" aria-current="page">ISO/IEC 17025</a><a href="autoavaliacao-9001.html">ISO 9001</a></nav>
+    <h1>Autoavaliação ISO/IEC 17025</h1>
+    <p class="lead">São 34 perguntas organizadas pelas cláusulas da norma. Ao final, aparecem a nota de cada seção e a lista dos pontos que precisam de atenção, com a evidência normalmente esperada para cada um.</p>
+    <p class="av-nota">As respostas ficam salvas só no seu navegador e não são enviadas.</p>
+  </div>
+
+  <div class="av-grid">
+    <form id="av-form" class="av-perguntas" novalidate></form>
+
+    <aside class="av-lado" aria-live="polite">
+      <div class="panel">
+        <div class="panel-head"><span>Resultado</span><span class="label" id="av-progresso">0 de 34 respondidas</span></div>
+        <div class="panel-body av-res">
+          <div class="av-total"><strong id="av-total">–</strong><span id="av-total-txt">Responda as perguntas para ver a nota.</span></div>
+          <div class="av-barra-prog" aria-hidden="true"><i id="av-barra-prog"></i></div>
+          <ul class="av-secoes" id="av-secoes"></ul>
+          <div class="av-acoes">
+            <a class="btn btn-primary btn-sm" href="#av-lacunas">Ver os pontos de atenção</a>
+            <button type="button" class="btn btn-ghost btn-sm" id="av-limpar">Recomeçar</button>
+          </div>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <section class="av-lacunas" id="av-lacunas">
+    <h2>Pontos que precisam de atenção</h2>
+    <p class="av-nota" id="av-lacunas-vazio">Os itens marcados como "Não" aparecem primeiro, seguidos dos marcados como "Parcial".</p>
+    <ol id="av-lista"></ol>
+    <div class="av-cta" id="av-cta" hidden>
+      <div>
+        <strong>O FQCORE ajuda a organizar esses registros.</strong>
+        <span>Equipamentos, calibrações, competência, documentos, não conformidades, auditorias internas e análise crítica ficam no mesmo sistema, com o histórico de cada registro.</span>
+      </div>
+      <a class="btn btn-primary" href="index.html#contato">Agendar conversa</a>
+    </div>
+    <p class="av-nota">Esta autoavaliação não substitui uma auditoria interna e cobre os pontos mais frequentes, não todos os requisitos da norma.</p>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <img src="logo-fqcore-claro.png" alt="FQCORE" width="127" height="18">
+    <span>Gestão da qualidade e metrologia</span>
+    <a href="index.html">Conheça o FQCORE</a>
+    <span class="right">São Paulo / SP</span>
+  </div>
+</footer>
+
+<script>
+  // [seção, cláusula, pergunta, evidência esperada]
+window.AV_DADOS = {
+  chave: "fqcore-autoavaliacao-17025",
+  secoes: {
+    "4": "Requisitos gerais",
+    "5": "Estrutura",
+    "6": "Recursos",
+    "7": "Processo",
+    "8": "Sistema de gestão"
+  },
+  perguntas: [
+    ["4", "4.1.4", "Os riscos à imparcialidade são identificados de forma contínua, inclusive os que vêm de relações do laboratório e do pessoal?", "Análise de riscos à imparcialidade atualizada, com as relações identificadas (comerciais, financeiras, de parentesco) e como cada risco foi eliminado ou minimizado."],
+    ["4", "4.2.1", "Existe compromisso de confidencialidade com força legal (contrato, termo) cobrindo as informações dos clientes?", "Cláusula contratual ou termo assinado, e o aviso ao cliente sobre o que será tornado público."],
+    ["4", "4.2.4", "Todo o pessoal, inclusive terceiros e membros de comitês, assinou termo de confidencialidade?", "Termos assinados por todos que têm acesso a informações de clientes, incluindo estagiários e prestadores."],
+    ["5", "5.3", "O escopo de atividades do laboratório está definido e documentado, separando o que é acreditado do que não é?", "Documento com o escopo e a forma como serviços fora do escopo acreditado são identificados para o cliente."],
+    ["5", "5.5", "Organograma, responsabilidades, autoridades e substitutos estão documentados e atualizados?", "Organograma vigente, descrição de funções e designação de substitutos para as funções-chave."],
+    ["6", "6.2.2", "Os requisitos de competência estão documentados para cada função (formação, treinamento, experiência)?", "Descrição de cargo ou matriz de competência com os requisitos de cada função que afeta os resultados."],
+    ["6", "6.2.5", "Existe registro de treinamento, supervisão e avaliação de competência de cada pessoa?", "Registros individuais de treinamento e de avaliação prática antes da autorização."],
+    ["6", "6.2.6", "Cada pessoa está formalmente autorizada para as atividades que executa (calibrar, analisar, emitir, autorizar)?", "Matriz de autorização assinada, por atividade e por método, com data."],
+    ["6", "6.2.5 f", "A competência do pessoal é monitorada periodicamente, e não só na contratação?", "Registros de monitoramento: repetições, observação de execução, resultados de comparações."],
+    ["6", "6.3.3", "As condições ambientais que influenciam os resultados são monitoradas, controladas e registradas?", "Registros de temperatura e umidade dos ambientes de calibração, com limites definidos e ação quando saem do limite."],
+    ["6", "6.4.4", "Os equipamentos são verificados antes de entrar em uso, para confirmar que atendem aos requisitos?", "Registro de verificação inicial de equipamentos novos ou que voltaram de reparo."],
+    ["6", "6.4.7", "Existe programa de calibração com intervalos definidos, revisado com base no histórico?", "Plano de calibração e evidência de que os intervalos foram analisados (não apenas 12 meses para tudo)."],
+    ["6", "6.4.8", "Todo equipamento que exige calibração tem identificação da situação de calibração ou da validade?", "Etiquetas ou outra forma de identificação conferidas na visita à bancada."],
+    ["6", "6.4.10", "As verificações intermediárias são feitas quando necessárias, com critério e registro?", "Procedimento ou plano de verificações intermediárias e registros com critério de aceitação."],
+    ["6", "6.4.11", "Os fatores de correção dos certificados são atualizados nos cálculos e planilhas quando chega calibração nova?", "Planilhas e software com os valores do certificado vigente, e evidência de quem atualizou."],
+    ["6", "6.4.13", "Os registros de equipamento estão completos (identificação, localização, calibrações, critérios de aceitação, manutenção, danos)?", "Ficha ou cadastro de cada equipamento com histórico de calibração, manutenção e ocorrências."],
+    ["6", "6.5", "Todos os padrões têm rastreabilidade comprovada por certificados com incerteza, de laboratórios competentes e dentro do escopo?", "Certificados vigentes de laboratórios RBC (ou signatários ILAC MRA) com o serviço dentro do escopo acreditado."],
+    ["6", "6.6.2", "Os fornecedores que afetam os resultados são avaliados, selecionados, monitorados e reavaliados com critério definido?", "Critérios de avaliação de fornecedores, lista de aprovados e registros de reavaliação."],
+    ["7", "7.1", "Os pedidos, propostas e contratos passam por análise crítica antes do aceite (requisitos, capacidade, método)?", "Registro da análise crítica de pedidos, incluindo alterações feitas depois do início do serviço."],
+    ["7", "7.1.3", "Quando o cliente pede declaração de conformidade, a regra de decisão é combinada com ele antes do serviço?", "Proposta ou contrato com a especificação e a regra de decisão acordadas."],
+    ["7", "7.2", "Os métodos normalizados foram verificados e os não normalizados ou desenvolvidos internamente foram validados?", "Registros de verificação de métodos normalizados e relatórios de validação dos demais."],
+    ["7", "7.4", "Os itens recebidos têm identificação única e o registro de anomalias no recebimento?", "Registro de recebimento com identificação do item e anotação de danos ou condições anormais."],
+    ["7", "7.5", "Os registros técnicos têm informação suficiente para repetir a calibração, com quem fez, quando e alterações rastreáveis?", "Folhas de dados originais, identificação de executante e verificador, e alterações sem apagar o valor anterior."],
+    ["7", "7.6", "Existe cálculo de incerteza para todas as calibrações do escopo, incluindo as dos próprios equipamentos?", "Planilhas ou memórias de cálculo de incerteza, com as fontes consideradas e o cálculo de νeff quando aplicável."],
+    ["7", "7.7.1", "Existe plano de monitoramento da validade dos resultados (repetições, padrões de controle, comparações internas)?", "Plano anual de garantia da validade e os registros das atividades realizadas, com análise dos dados."],
+    ["7", "7.7.2", "O laboratório participa de ensaios de proficiência ou comparações interlaboratoriais, conforme a política da Cgcre?", "Plano de participação em EP e relatórios com os resultados (En, z) e ações tomadas quando insatisfatórios."],
+    ["7", "7.8", "Os certificados trazem todas as informações exigidas, inclusive incerteza, condições de calibração e evidência de rastreabilidade?", "Amostra de certificados emitidos conferida contra os itens 7.8.2 e 7.8.4."],
+    ["7", "7.9", "Existe processo documentado para reclamações, disponível a quem solicitar, com resposta ao reclamante?", "Procedimento de reclamações e registros de tratamento, inclusive quando a reclamação foi improcedente."],
+    ["7", "7.10", "O trabalho não conforme é tratado com avaliação de impacto, comunicação ao cliente e recolhimento de resultados quando necessário?", "Procedimento de trabalho não conforme e registros de casos com a análise de significância."],
+    ["7", "7.11.2", "O software usado para cálculos e registros foi validado quanto à funcionalidade antes do uso, inclusive planilhas?", "Registros de validação de planilhas e software, com a versão validada e os casos de teste."],
+    ["8", "8.3", "Os documentos são aprovados, revisados, com revisão atual identificada e obsoletos retirados de uso?", "Lista mestra ou sistema de controle de documentos e verificação de que a versão na bancada é a vigente."],
+    ["8", "8.4", "Os registros têm prazo de retenção definido, proteção, backup e recuperação testada?", "Tabela de retenção, política de backup e evidência de que uma recuperação foi testada."],
+    ["8", "8.7", "As não conformidades passam por análise de causa, ação corretiva e verificação de eficácia?", "Registros de NC com causa identificada, ação e verificação de eficácia em data posterior."],
+    ["8", "8.8 / 8.9", "Auditoria interna e análise crítica pela direção são feitas no intervalo planejado, cobrindo todos os requisitos e entradas?", "Programa e relatórios de auditoria interna, e ata da análise crítica com as entradas do item 8.9.2 e as saídas."]
+  ]
+};
+</script>
+<script src="autoavaliacao.js"></script>
+</body>
+</html>

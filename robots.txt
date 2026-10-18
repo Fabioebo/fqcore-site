@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://fqcore.com.br/sitemap.xml
